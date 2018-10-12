@@ -10,5 +10,10 @@
     <string name="string_translate">转换</string>
     <string name="string_other">其他</string>
 
+    <string name="string_music_long">长度 : %1$s</string>
+    <string name="string_music_type">类型 : %1$s</string>
+    <string name="string_music_size">大小 : %1$s</string>
+    <string name="string_data_empty">当前暂无已处理好的音乐</string>
+
 
 </resources>

@@ -5,6 +5,7 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -64,14 +65,9 @@ public class MainMusicFragment extends BaseFragment {
     private void initView(View view) {
         mViewPager = view.findViewById(R.id.mFragMainViewPager);
         mTabLayout = view.findViewById(R.id.mFragMainTabLayout);
+
         //
         mViewPager.setAdapter(mMainViewPagerAdapter);
-        //
-        mTabLayout.addTab(mTabLayout.newTab().setText(getResources().getString(R.string.string_local)));
-        mTabLayout.addTab(mTabLayout.newTab().setText(getResources().getString(R.string.string_cut)));
-        mTabLayout.addTab(mTabLayout.newTab().setText(getResources().getString(R.string.string_synthetic)));
-        mTabLayout.addTab(mTabLayout.newTab().setText(getResources().getString(R.string.string_translate)));
-        mTabLayout.addTab(mTabLayout.newTab().setText(getResources().getString(R.string.string_other)));
         mTabLayout.setupWithViewPager(mViewPager);
     }
 
@@ -92,7 +88,5 @@ public class MainMusicFragment extends BaseFragment {
 
             }
         });
-
     }
-
 }

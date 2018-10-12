@@ -1,5 +1,6 @@
 package icbc.com.musiccut.adapter;
 
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
@@ -7,6 +8,7 @@ import android.support.v4.app.FragmentPagerAdapter;
 import java.util.List;
 
 import icbc.com.musiccut.base.BaseFragment;
+import icbc.com.musiccut.utils.Constants;
 
 /**
  * Created By RedWolf on 2018/10/12 9:04
@@ -29,5 +31,11 @@ public class MainViewPagerAdapter extends FragmentPagerAdapter {
     @Override
     public int getCount() {
         return mBaseFragmentList.size();
+    }
+
+    @Nullable
+    @Override
+    public CharSequence getPageTitle(int position) {
+        return Constants.TABS[position];
     }
 }

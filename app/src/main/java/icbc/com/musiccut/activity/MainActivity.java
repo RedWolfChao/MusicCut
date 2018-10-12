@@ -71,6 +71,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
                 } else {
                     transaction.show(mMainMusicFragment);
                 }
+                transaction.commit();
                 break;
             case R.id.mFootTvSetting:
                 if (mMainSettingFragment == null) {
@@ -79,12 +80,13 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
                 } else {
                     transaction.show(mMainSettingFragment);
                 }
+                transaction.commit();
                 break;
             case R.id.mFabAdd:
                 //  TODO add...
                 break;
         }
-        transaction.commit();
+
     }
 
 

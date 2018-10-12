@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <TextView
+        android:id="@+id/mTvPinyin"
+        android:layout_width="match_parent"
+        android:layout_height="24dp"
+        android:background="@color/gray"
+        android:gravity="center_vertical"
+        android:paddingLeft="20dp"
+        android:text="A"
+        android:textColor="@color/colorPrimary"
+        android:textSize="@dimen/title_size" />
+
+    <android.support.constraint.ConstraintLayout
+        android:id="@+id/mConsLayoutMusicInfo"
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:background="@color/white"
+        app:layout_constraintTop_toBottomOf="@id/mTvPinyin">
+
+        <ImageView
+            android:id="@+id/mIvMusicPlay"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="20dp"
+            android:src="@mipmap/icon_play"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/mTvMusicName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:maxEms="12"
+            android:maxLines="1"
+            android:text="Around the world"
+            android:textSize="@dimen/title_size"
+            app:layout_constraintLeft_toRightOf="@id/mIvMusicPlay"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/mTvMusicLong"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="16dp"
+            android:text="长度 : 04:51"
+            android:textSize="@dimen/small_size"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toRightOf="@id/mIvMusicPlay"
+            app:layout_constraintTop_toTopOf="@id/mTvMusicName" />
+
+        <TextView
+            android:id="@+id/mTvMusicType"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="16dp"
+            android:text="类型 : mp3"
+            android:textSize="@dimen/small_size"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toRightOf="@id/mTvMusicLong"
+            app:layout_constraintTop_toTopOf="@id/mTvMusicName" />
+
+        <TextView
+            android:id="@+id/mTvMusicSize"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="16dp"
+            android:text="大小 : 4.66MB"
+            android:textSize="@dimen/small_size"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toRightOf="@id/mTvMusicType"
+            app:layout_constraintTop_toTopOf="@id/mTvMusicName" />
+
+        <ImageButton
+            android:id="@+id/mIbMenu"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:background="@null"
+            android:paddingLeft="5dp"
+            android:paddingRight="5dp"
+            android:src="@mipmap/icon_menu"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+    </android.support.constraint.ConstraintLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/gray"
+        app:layout_constraintTop_toBottomOf="@id/mConsLayoutMusicInfo" />
+</android.support.constraint.ConstraintLayout>
