@@ -1,0 +1,14 @@
+<resources>
+    <string name="app_name">MusicCut</string>
+    <string name="string_search_local_music">搜索本地歌曲</string>
+    <string name="string_music">乐库</string>
+    <string name="string_setting">设置</string>
+
+    <string name="string_local">本地</string>
+    <string name="string_cut">剪切</string>
+    <string name="string_synthetic">合成</string>
+    <string name="string_translate">转换</string>
+    <string name="string_other">其他</string>
+
+
+</resources>
