@@ -11,8 +11,9 @@
         android:id="@+id/mFootTvMusic"
         android:layout_width="0dp"
         android:layout_height="match_parent"
-        android:drawableTop="@mipmap/icon_music"
+        android:drawableTop="@mipmap/icon_music_selected"
         android:gravity="center"
+        android:textColor="@color/colorPrimary"
         android:text="@string/string_music"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toLeftOf="@id/mFootTvSetting" />

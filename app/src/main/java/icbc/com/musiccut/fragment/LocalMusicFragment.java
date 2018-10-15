@@ -85,12 +85,17 @@ public class LocalMusicFragment extends BaseFragment implements View.OnClickList
         }
         if (mLocalMusicList != null && mLocalMusicList.size() != 0) {
             Collections.sort(mLocalMusicList);
-            mLocalMusicAdapter = new LocalMusicAdapter(mLocalMusicList, getActivity());
-            mManager = new LinearLayoutManager(getActivity());
+            if (mManager == null) {
+                mManager = new LinearLayoutManager(getActivity());
+                mRecyclerView.setLayoutManager(mManager);
+            }
+            if (mLocalMusicAdapter == null) {
+                mLocalMusicAdapter = new LocalMusicAdapter(mLocalMusicList, getActivity());
+                mRecyclerView.setAdapter(mLocalMusicAdapter);
+            }
+            mLocalMusicAdapter.notifyDataSetChanged();
             mTvDataEmpty.setVisibility(View.GONE);
             mRecyclerView.setVisibility(View.VISIBLE);
-            mRecyclerView.setLayoutManager(mManager);
-            mRecyclerView.setAdapter(mLocalMusicAdapter);
         } else {
             mRecyclerView.setVisibility(View.GONE);
             mTvDataEmpty.setVisibility(View.VISIBLE);
