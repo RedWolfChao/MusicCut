@@ -12,9 +12,11 @@ import android.widget.ImageView;
 import android.widget.SeekBar;
 import android.widget.TextView;
 
+import com.blankj.utilcode.util.AppUtils;
 import com.blankj.utilcode.util.LogUtils;
 
 import icbc.com.musiccut.R;
+import icbc.com.musiccut.utils.TimeUtils;
 
 /**
  * Created By RedWolf on 2018/10/15 9:29
@@ -23,35 +25,40 @@ import icbc.com.musiccut.R;
 
 
 public class PlayDialog extends Dialog {
+    private Context mContext;
     private TextView mTvMusicProgress;
     private TextView mTvMusicMaxProgress;
     private TextView mTvMusicName;
     private SeekBar mSbMusicProcess;
     private ImageView mIvMusicPlay;
 
-    private String mMaxProgress;
+    private long mMaxProgress;
     private String mMusicName;
     private SeekBar.OnSeekBarChangeListener mOnSeekBarChangeListener;
     private View.OnClickListener mOnClickListener;
+    private OnDismissListener mOnDismissListener;
 
 
-    private PlayDialog(@NonNull Context context, String maxProgress, String musicName,
-                       SeekBar.OnSeekBarChangeListener onSeekBarChangeListener, View.OnClickListener onClickListener) {
+    private PlayDialog(@NonNull Context context, long maxProgress, String musicName,
+                       SeekBar.OnSeekBarChangeListener onSeekBarChangeListener, View.OnClickListener onClickListener,
+                       OnDismissListener onDismissListener) {
         super(context, R.style.PlayDialog);
         this.mMaxProgress = maxProgress;
         this.mMusicName = musicName;
         this.mOnSeekBarChangeListener = onSeekBarChangeListener;
         this.mOnClickListener = onClickListener;
+        this.mOnDismissListener = onDismissListener;
+        this.mContext = context;
     }
 
     private static PlayDialog playDialog;
 
-    public static PlayDialog build(Context context, String maxProgress, String musicName,
-                                   SeekBar.OnSeekBarChangeListener onSeekBarChangeListener, View.OnClickListener onClickListener) {
+    public static PlayDialog build(Context context, long maxProgress, String musicName,
+                                   SeekBar.OnSeekBarChangeListener onSeekBarChangeListener, View.OnClickListener onClickListener, OnDismissListener onDismissListener) {
         if (playDialog != null) {
             playDialog.cancelDialog();
         }
-        playDialog = new PlayDialog(context, maxProgress, musicName, onSeekBarChangeListener, onClickListener);
+        playDialog = new PlayDialog(context, maxProgress, musicName, onSeekBarChangeListener, onClickListener, onDismissListener);
         return playDialog;
     }
 
@@ -67,15 +74,16 @@ public class PlayDialog extends Dialog {
         //
         mTvMusicProgress.setText(R.string.string_play_start_time);
         mTvMusicName.setText(mMusicName);
-        mTvMusicMaxProgress.setText(mMaxProgress);
+        mTvMusicMaxProgress.setText(TimeUtils.millis2minute(mMaxProgress));
+        mSbMusicProcess.setMax((int) mMaxProgress);
         mSbMusicProcess.setOnSeekBarChangeListener(mOnSeekBarChangeListener);
         mIvMusicPlay.setOnClickListener(mOnClickListener);
-
+        setOnDismissListener(mOnDismissListener);
     }
 
-    public void setMusicProgress(String progress) {
+    public void setMusicProgress(long progress) {
         if (mTvMusicProgress != null) {
-            mTvMusicMaxProgress.setText(progress);
+            mTvMusicProgress.setText(TimeUtils.millis2minute(progress));
         }
     }
 
@@ -94,6 +102,24 @@ public class PlayDialog extends Dialog {
         playDialog = null;
         this.dismiss();
         cancel();
+    }
+
+    /**
+     * 暂停播放
+     */
+    public void pausePlay() {
+        if (playDialog != null) {
+            mIvMusicPlay.setImageDrawable(mContext.getResources().getDrawable(R.mipmap.icon_pause_circle));
+        }
+    }
+
+    /**
+     * 开始播放
+     */
+    public void startPlay() {
+        if (playDialog != null) {
+            mIvMusicPlay.setImageDrawable(mContext.getResources().getDrawable(R.mipmap.icon_play_circle));
+        }
     }
 
     @Override

@@ -29,12 +29,9 @@ public class ScanMusicUtils {
         if (context == null) {
             return retDataList;
         }
-        LogUtils.iTag("RedWolf", "getMusicData: " + context);
         Cursor cursor = context.getContentResolver().query(MediaStore.Audio.Media.EXTERNAL_CONTENT_URI, null, null, null, MediaStore.Audio.AudioColumns.IS_MUSIC);
         if (cursor != null) {
-            LogUtils.iTag("RedWolf", "getMusicData: INTO");
             while (cursor.moveToNext()) {
-                LogUtils.iTag("RedWolf", "getMusicData: FUCK!!!");
                 LocalMusicEntity entity = new LocalMusicEntity();
                 entity.setMusicName(cursor.getString(cursor.getColumnIndexOrThrow(MediaStore.Audio.Media.DISPLAY_NAME)));
                 entity.setMusicEasyName(cursor.getString(cursor.getColumnIndexOrThrow(MediaStore.Audio.Media.TITLE)));

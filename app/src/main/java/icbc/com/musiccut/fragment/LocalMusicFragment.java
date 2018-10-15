@@ -1,9 +1,12 @@
 package icbc.com.musiccut.fragment;
 
+import android.annotation.SuppressLint;
+import android.content.DialogInterface;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -15,9 +18,8 @@ import android.widget.TextView;
 
 import com.blankj.utilcode.util.LogUtils;
 import com.blankj.utilcode.util.ToastUtils;
-import com.google.gson.Gson;
 
-import java.util.ArrayList;
+import java.io.IOException;
 import java.util.Collections;
 import java.util.List;
 
@@ -25,9 +27,10 @@ import icbc.com.musiccut.R;
 import icbc.com.musiccut.adapter.LocalMusicAdapter;
 import icbc.com.musiccut.base.BaseFragment;
 import icbc.com.musiccut.callback.LocalMusicCallBack;
+import icbc.com.musiccut.callback.MusicPlayCallBack;
 import icbc.com.musiccut.model.LocalMusicEntity;
 import icbc.com.musiccut.utils.ScanMusicUtils;
-import icbc.com.musiccut.utils.TimeUtils;
+import icbc.com.musiccut.utils.manager.MediaPlayManager;
 import icbc.com.musiccut.view.PlayDialog;
 
 /**
@@ -35,7 +38,9 @@ import icbc.com.musiccut.view.PlayDialog;
  * 乐库-本地
  */
 
-public class LocalMusicFragment extends BaseFragment implements View.OnClickListener, SeekBar.OnSeekBarChangeListener {
+public class LocalMusicFragment extends BaseFragment implements View.OnClickListener,
+        SeekBar.OnSeekBarChangeListener, MusicPlayCallBack,
+        DialogInterface.OnDismissListener {
     private static LocalMusicFragment sLocalMusicFragment;
 
     public static LocalMusicFragment getInstance() {
@@ -52,6 +57,8 @@ public class LocalMusicFragment extends BaseFragment implements View.OnClickList
     private LinearLayoutManager mManager;
     private TextView mTvDataEmpty;
     private PlayDialog mPlayDialog;
+    private MediaPlayManager mMediaPlayManager;
+    private final Handler mHandler = new Handler();
 
     @Nullable
     @Override
@@ -67,7 +74,9 @@ public class LocalMusicFragment extends BaseFragment implements View.OnClickList
         initEvent();
     }
 
+    @SuppressLint("HandlerLeak")
     private void initData() {
+        mMediaPlayManager = new MediaPlayManager();
         initMusicList();
     }
 
@@ -129,30 +138,74 @@ public class LocalMusicFragment extends BaseFragment implements View.OnClickList
     }
 
     private void showDialog(LocalMusicEntity entity) {
+        //  初始化Dialog
         mPlayDialog = PlayDialog.build(getActivity(),
-                TimeUtils.millis2minute(entity.getMusicLong()) + "",
+                entity.getMusicLong(),
                 entity.getMusicPath(),
-                this, this);
+                this, this, this);
+        //  弹出
         mPlayDialog.show();
+        //  播放音乐
+        try {
+            mMediaPlayManager.init(entity.getMusicPath(), this);
+            mMediaPlayManager.playMusic();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
     public void onClick(View v) {
+        //
+        switch (v.getId()) {
+            case R.id.mIvMusicPlay:
+                //  播放||暂停音乐
+                mMediaPlayManager.playMusic();
+                //
+                if (mMediaPlayManager.isPlaying()) {
+                    mPlayDialog.pausePlay();
+                } else {
+                    mPlayDialog.startPlay();
+                }
+                break;
+        }
 
     }
 
     @Override
     public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-
+        //  如果是用户滑动的才设置播放进度
+        if (fromUser) {
+            mMediaPlayManager.seekTo(progress);
+        }
     }
 
     @Override
     public void onStartTrackingTouch(SeekBar seekBar) {
+        //  TODO nothing ...
 
     }
 
     @Override
     public void onStopTrackingTouch(SeekBar seekBar) {
+        //  TODO nothing ...
+    }
 
+    @Override
+    public void onMusicProgress(final int progress) {
+        mHandler.post(new Runnable() {
+            @Override
+            public void run() {
+                mPlayDialog.setMusicProgress(progress);
+                mPlayDialog.setSeekBarProgress(progress);
+            }
+        });
+    }
+
+    @Override
+    public void onDismiss(DialogInterface dialog) {
+        //  Dialog 消失事件
+        //  关音乐
+        mMediaPlayManager.stopMusic();
     }
 }
