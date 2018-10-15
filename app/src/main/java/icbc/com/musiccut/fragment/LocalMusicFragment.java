@@ -10,6 +10,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.SeekBar;
 import android.widget.TextView;
 
 import com.blankj.utilcode.util.LogUtils;
@@ -26,13 +27,15 @@ import icbc.com.musiccut.base.BaseFragment;
 import icbc.com.musiccut.callback.LocalMusicCallBack;
 import icbc.com.musiccut.model.LocalMusicEntity;
 import icbc.com.musiccut.utils.ScanMusicUtils;
+import icbc.com.musiccut.utils.TimeUtils;
+import icbc.com.musiccut.view.PlayDialog;
 
 /**
  * Created By RedWolf on 2018/10/11 13:56
  * 乐库-本地
  */
 
-public class LocalMusicFragment extends BaseFragment {
+public class LocalMusicFragment extends BaseFragment implements View.OnClickListener, SeekBar.OnSeekBarChangeListener {
     private static LocalMusicFragment sLocalMusicFragment;
 
     public static LocalMusicFragment getInstance() {
@@ -48,6 +51,7 @@ public class LocalMusicFragment extends BaseFragment {
     private LocalMusicAdapter mLocalMusicAdapter;
     private LinearLayoutManager mManager;
     private TextView mTvDataEmpty;
+    private PlayDialog mPlayDialog;
 
     @Nullable
     @Override
@@ -97,7 +101,12 @@ public class LocalMusicFragment extends BaseFragment {
         mLocalMusicAdapter.addLocalMusicCallBack(new LocalMusicCallBack() {
             @Override
             public void onItemClick(int pos) {
-                ToastUtils.showShort("onItemClick 点击的是" + mLocalMusicList.get(pos).getMusicName());
+                if (mPlayDialog != null &&
+                        mPlayDialog.isShowing()) {
+                    mPlayDialog.cancelDialog();
+                } else {
+                    showDialog(mLocalMusicList.get(pos));
+                }
             }
 
             @Override
@@ -114,4 +123,31 @@ public class LocalMusicFragment extends BaseFragment {
 
     }
 
+    private void showDialog(LocalMusicEntity entity) {
+        mPlayDialog = PlayDialog.build(getActivity(),
+                TimeUtils.millis2minute(entity.getMusicLong()) + "",
+                entity.getMusicPath(),
+                this, this);
+        mPlayDialog.show();
+    }
+
+    @Override
+    public void onClick(View v) {
+
+    }
+
+    @Override
+    public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+
+    }
+
+    @Override
+    public void onStartTrackingTouch(SeekBar seekBar) {
+
+    }
+
+    @Override
+    public void onStopTrackingTouch(SeekBar seekBar) {
+
+    }
 }

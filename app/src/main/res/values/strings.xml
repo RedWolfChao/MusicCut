@@ -14,6 +14,7 @@
     <string name="string_music_type">类型 : %1$s</string>
     <string name="string_music_size">大小 : %1$s</string>
     <string name="string_data_empty">当前暂无已处理好的音乐</string>
+    <string name="string_play_start_time">00:00</string>
 
 
 </resources>
