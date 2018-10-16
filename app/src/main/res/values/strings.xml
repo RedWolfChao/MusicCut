@@ -17,6 +17,13 @@
     <string name="string_play_start_time">00:00</string>
     <string name="string_praise">给我们好评</string>
     <string name="string_music_operation">音频处理</string>
+    <string name="string_qq1">官方①群</string>
+    <string name="string_qq2">官方②群</string>
+    <string name="string_share">分享APP</string>
+    <string name="string_wechat">公众号</string>
+    <string name="string_change_theme">切换主题</string>
+    <string name="string_feedback">反馈</string>
+    <string name="string_common_question">常见问题</string>
 
 
 </resources>

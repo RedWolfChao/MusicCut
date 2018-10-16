@@ -42,7 +42,7 @@ import icbc.com.musiccut.view.PlayDialog;
 
 public class LocalMusicFragment extends BaseFragment implements View.OnClickListener,
         SeekBar.OnSeekBarChangeListener, MusicPlayCallBack,
-        DialogInterface.OnDismissListener {
+        DialogInterface.OnDismissListener, LocalMusicCallBack {
     private static LocalMusicFragment sLocalMusicFragment;
 
     public static LocalMusicFragment getInstance() {
@@ -94,7 +94,7 @@ public class LocalMusicFragment extends BaseFragment implements View.OnClickList
         //  读取本地音乐..
         if (mLocalMusicList == null) {
             mLocalMusicList = ScanMusicUtils.getMusicData(getActivity());
-        }else{
+        } else {
             mLocalMusicList.clear();
             mLocalMusicList.addAll(ScanMusicUtils.getMusicData(getActivity()));
         }
@@ -113,6 +113,7 @@ public class LocalMusicFragment extends BaseFragment implements View.OnClickList
             } else {
                 mLocalMusicAdapter.setLocalMusicEntityList(mLocalMusicList);
             }
+            mLocalMusicAdapter.addLocalMusicCallBack(this);
             mTvDataEmpty.setVisibility(View.GONE);
             mRecyclerView.setVisibility(View.VISIBLE);
         } else {
@@ -122,22 +123,6 @@ public class LocalMusicFragment extends BaseFragment implements View.OnClickList
     }
 
     private void initEvent() {
-        mLocalMusicAdapter.addLocalMusicCallBack(new LocalMusicCallBack() {
-            @Override
-            public void onItemClick(int pos) {
-                if (mPlayDialog != null &&
-                        mPlayDialog.isShowing()) {
-                    mPlayDialog.cancelDialog();
-                } else {
-                    showDialog(mLocalMusicList.get(pos));
-                }
-            }
-
-            @Override
-            public void onMenuClick(int pos) {
-                ToastUtils.showShort("onMenuClick 点击的是" + mLocalMusicList.get(pos).getMusicName());
-            }
-        });
         mSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
@@ -218,5 +203,20 @@ public class LocalMusicFragment extends BaseFragment implements View.OnClickList
         //  Dialog 消失事件
         //  关音乐
         mMediaPlayManager.stopMusic();
+    }
+
+    @Override
+    public void onItemClick(int pos) {
+        if (mPlayDialog != null &&
+                mPlayDialog.isShowing()) {
+            mPlayDialog.cancelDialog();
+        } else {
+            showDialog(mLocalMusicList.get(pos));
+        }
+    }
+
+    @Override
+    public void onMenuClick(int pos) {
+        ToastUtils.showShort("onMenuClick 点击的是" + mLocalMusicList.get(pos).getMusicName());
     }
 }

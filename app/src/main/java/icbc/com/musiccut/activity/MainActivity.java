@@ -2,18 +2,28 @@ package icbc.com.musiccut.activity;
 
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
+import android.support.constraint.ConstraintLayout;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.AppCompatEditText;
+import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.RecyclerView;
+import android.view.MotionEvent;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.blankj.utilcode.util.ToastUtils;
 
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
+
 import icbc.com.musiccut.R;
+import icbc.com.musiccut.adapter.MenuAdapter;
 import icbc.com.musiccut.base.BaseActivity;
 import icbc.com.musiccut.fragment.MainMusicFragment;
 import icbc.com.musiccut.fragment.MainSettingFragment;
+import icbc.com.musiccut.model.EventShowMenu;
 
 /**
  * Created By RedWolf on 2018/10/12 10:11
@@ -23,10 +33,11 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
     private AppCompatEditText mEtSearch;
     private TextView mFootTvMusic;
     private TextView mFootTvSetting;
-    private FloatingActionButton mFabAdd;
+    private ImageView mIvAdd;
     private MainMusicFragment mMainMusicFragment;
     private MainSettingFragment mMainSettingFragment;
     private boolean mCanBack;
+    private ConstraintLayout mConstraintLayoutLayoutMenu;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,22 +46,51 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         initData();
         initView();
         initEvent();
+        initMenu();
+    }
+
+    private void initMenu() {
+        mConstraintLayoutLayoutMenu = findViewById(R.id.mConstraintLayoutLayoutMenu);
+        RecyclerView mRecyclerViewMenu = findViewById(R.id.mRecyclerViewMenu);
+        ImageView mIvMenuClose = findViewById(R.id.mIvMenuClose);
+        mIvMenuClose.setOnClickListener(this);
+        MenuAdapter mMenuAdapter = new MenuAdapter(mContext);
+        GridLayoutManager mGridLayoutManager = new GridLayoutManager(mContext, 4);
+        mRecyclerViewMenu.setLayoutManager(mGridLayoutManager);
+        mRecyclerViewMenu.setAdapter(mMenuAdapter);
+        mConstraintLayoutLayoutMenu.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                return true;
+            }
+        });
     }
 
     private void initData() {
+//        EventBus.getDefault().register(this);
     }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+//        EventBus.getDefault().unregister(this);
+    }
+
+//    @Subscribe(threadMode = ThreadMode.MAIN)
+//    public void showMenu(EventShowMenu showMenu) {
+//        mConstraintLayoutLayoutMenu.setVisibility(View.VISIBLE);
+//    }
 
     private void initView() {
         mEtSearch = findViewById(R.id.mEtSearch);
         mFootTvMusic = findViewById(R.id.mFootTvMusic);
         mFootTvSetting = findViewById(R.id.mFootTvSetting);
-        mFabAdd = findViewById(R.id.mFabAdd);
+        mIvAdd = findViewById(R.id.mIvAdd);
         mEtSearch = findViewById(R.id.mEtSearch);
-        //
     }
 
     private void initEvent() {
-        bindClickByView(this, mFootTvMusic, mFootTvSetting, mFabAdd);
+        bindClickByView(this, mFootTvMusic, mFootTvSetting, mIvAdd);
         mEtSearch.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
             public void onFocusChange(View v, boolean hasFocus) {
@@ -94,9 +134,12 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
                 }
                 transaction.commit();
                 break;
-            case R.id.mFabAdd:
+            case R.id.mIvAdd:
                 //  TODO add...
-                MenuActivity.actionStart(this);
+                mConstraintLayoutLayoutMenu.setVisibility(View.VISIBLE);
+                break;
+            case R.id.mIvMenuClose:
+                mConstraintLayoutLayoutMenu.setVisibility(View.GONE);
                 break;
         }
     }
