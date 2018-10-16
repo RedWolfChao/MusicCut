@@ -59,7 +59,6 @@ public class LocalMusicFragment extends BaseFragment implements View.OnClickList
     private TextView mTvDataEmpty;
     private PlayDialog mPlayDialog;
     private MediaPlayManager mMediaPlayManager;
-    private boolean mIsInit;
     private final Handler mHandler = new Handler();
 
     @Nullable
@@ -86,10 +85,17 @@ public class LocalMusicFragment extends BaseFragment implements View.OnClickList
         mRecyclerView = view.findViewById(R.id.mRecyclerView);
         mTvDataEmpty = view.findViewById(R.id.mTvDataEmpty);
         mSwipeRefreshLayout = view.findViewById(R.id.mSwipeRefreshLayout);
+        mSwipeRefreshLayout.setColorSchemeResources(R.color.colorPrimary);
+        mSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                initMusicList();
+            }
+        });
+
     }
 
     private void initMusicList() {
-        mIsInit = true;
         //  读取本地音乐..
         if (mLocalMusicList == null) {
             mLocalMusicList = ScanMusicUtils.getMusicData(getActivity());
@@ -122,12 +128,6 @@ public class LocalMusicFragment extends BaseFragment implements View.OnClickList
     }
 
     private void initEvent() {
-        mSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-            @Override
-            public void onRefresh() {
-                initMusicList();
-            }
-        });
 
     }
 
