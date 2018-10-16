@@ -68,6 +68,7 @@ public class MainMusicFragment extends BaseFragment {
 
         //
         mViewPager.setAdapter(mMainViewPagerAdapter);
+        mViewPager.setOffscreenPageLimit(5);
         mTabLayout.setupWithViewPager(mViewPager);
     }
 

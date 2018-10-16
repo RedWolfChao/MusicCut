@@ -39,6 +39,7 @@ public class SyntheticMusicFragment extends BaseFragment {
         }
         return sSyntheticMusicFragment;
     }
+
     private RecyclerView mRecyclerView;
     private SwipeRefreshLayout mSwipeRefreshLayout;
     private List<LocalMusicEntity> mLocalMusicList;
@@ -105,7 +106,8 @@ public class SyntheticMusicFragment extends BaseFragment {
                     ToastUtils.showShort("onMenuClick 点击的是" + mLocalMusicList.get(pos).getMusicName());
                 }
             });
-        }        mSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+        }
+        mSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
                 initMusicList();
