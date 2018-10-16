@@ -1,12 +1,13 @@
 package icbc.com.musiccut.activity;
 
+import android.animation.Animator;
+import android.animation.ObjectAnimator;
+import android.annotation.SuppressLint;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.constraint.ConstraintLayout;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.AppCompatEditText;
-import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.ImageView;
@@ -14,16 +15,10 @@ import android.widget.TextView;
 
 import com.blankj.utilcode.util.ToastUtils;
 
-import org.greenrobot.eventbus.EventBus;
-import org.greenrobot.eventbus.Subscribe;
-import org.greenrobot.eventbus.ThreadMode;
-
 import icbc.com.musiccut.R;
-import icbc.com.musiccut.adapter.MenuAdapter;
 import icbc.com.musiccut.base.BaseActivity;
 import icbc.com.musiccut.fragment.MainMusicFragment;
 import icbc.com.musiccut.fragment.MainSettingFragment;
-import icbc.com.musiccut.model.EventShowMenu;
 
 /**
  * Created By RedWolf on 2018/10/12 10:11
@@ -37,7 +32,11 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
     private MainMusicFragment mMainMusicFragment;
     private MainSettingFragment mMainSettingFragment;
     private boolean mCanBack;
-    private ConstraintLayout mConstraintLayoutLayoutMenu;
+    private ConstraintLayout mMenuLayout, mInMenuLayout;
+    private ObjectAnimator mEnterAnimator;
+    private ObjectAnimator mEnterInLayoutAnimator;
+    private ObjectAnimator mExitAnimator;
+    private ObjectAnimator mExitInLayoutAnimator;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,30 +49,61 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
     }
 
     private void initMenu() {
-        mConstraintLayoutLayoutMenu = findViewById(R.id.mConstraintLayoutLayoutMenu);
-        RecyclerView mRecyclerViewMenu = findViewById(R.id.mRecyclerViewMenu);
+        mMenuLayout = findViewById(R.id.mMenuLayout);
+        mInMenuLayout = findViewById(R.id.mInMenuLayout);
+        mInMenuLayout.animate().translationY(500);
         ImageView mIvMenuClose = findViewById(R.id.mIvMenuClose);
         mIvMenuClose.setOnClickListener(this);
-        MenuAdapter mMenuAdapter = new MenuAdapter(mContext);
-        GridLayoutManager mGridLayoutManager = new GridLayoutManager(mContext, 4);
-        mRecyclerViewMenu.setLayoutManager(mGridLayoutManager);
-        mRecyclerViewMenu.setAdapter(mMenuAdapter);
-        mConstraintLayoutLayoutMenu.setOnTouchListener(new View.OnTouchListener() {
+        initAnim();
+        //  拦截点击事件
+        mMenuLayout.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
                 return true;
             }
         });
+
+
+    }
+
+    private void initAnim() {
+        //  外部透明度动画
+        mEnterAnimator = ObjectAnimator.ofFloat(
+                mMenuLayout, "alpha", 0, 1);
+        mEnterAnimator.setDuration(300);
+        mExitAnimator = ObjectAnimator.ofFloat(
+                mMenuLayout, "alpha", 1, 0);
+        mExitAnimator.setDuration(300);
+        //  内部平移动画
+        mEnterInLayoutAnimator = ObjectAnimator.ofFloat(
+                mInMenuLayout, "translationY", 0);
+        mEnterInLayoutAnimator.setDuration(300);
+        mExitInLayoutAnimator = ObjectAnimator.ofFloat(
+                mInMenuLayout, "translationY", 500);
+        mExitInLayoutAnimator.setDuration(300);
+        mExitAnimator.addListener(new AnimCallBack() {
+
+            @Override
+            public void onAnimationEnd(Animator animation) {
+                mMenuLayout.setVisibility(View.GONE);
+            }
+        });
+
+        mEnterAnimator.addListener(new AnimCallBack() {
+
+            @Override
+            public void onAnimationStart(Animator animation) {
+                mMenuLayout.setVisibility(View.VISIBLE);
+            }
+        });
     }
 
     private void initData() {
-//        EventBus.getDefault().register(this);
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
-//        EventBus.getDefault().unregister(this);
     }
 
 //    @Subscribe(threadMode = ThreadMode.MAIN)
@@ -136,10 +166,12 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
                 break;
             case R.id.mIvAdd:
                 //  TODO add...
-                mConstraintLayoutLayoutMenu.setVisibility(View.VISIBLE);
+                mEnterAnimator.start();
+                mEnterInLayoutAnimator.start();
                 break;
             case R.id.mIvMenuClose:
-                mConstraintLayoutLayoutMenu.setVisibility(View.GONE);
+                mExitAnimator.start();
+                mExitInLayoutAnimator.start();
                 break;
         }
     }
@@ -190,7 +222,28 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
                 }
             }).start();
         }
+    }
 
+    abstract class AnimCallBack implements Animator.AnimatorListener {
 
+        @Override
+        public void onAnimationEnd(Animator animation) {
+            //  NONE
+        }
+
+        @Override
+        public void onAnimationStart(Animator animation) {
+            //  NONE
+        }
+
+        @Override
+        public void onAnimationCancel(Animator animation) {
+            //  NONE
+        }
+
+        @Override
+        public void onAnimationRepeat(Animator animation) {
+            //  NONE
+        }
     }
 }

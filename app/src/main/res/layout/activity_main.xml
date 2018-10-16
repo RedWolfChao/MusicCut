@@ -83,66 +83,13 @@
         app:layout_constraintEnd_toEndOf="@id/mFootLayout"
         app:layout_constraintStart_toStartOf="@id/mFootLayout" />
 
-    <android.support.constraint.ConstraintLayout
-        android:id="@+id/mConstraintLayoutLayoutMenu"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:background="@color/white_tran"
-        android:visibility="gone"
+    <include
+        android:id="@+id/mMenuLayout"
+        layout="@layout/menu_layout"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        android:visibility="gone"
+        app:layout_constraintTop_toTopOf="parent" />
 
-        <LinearLayout
-            android:id="@+id/mLLMusicOperation"
-            android:layout_width="match_parent"
-            android:layout_height="32dp"
-            android:gravity="center_vertical"
-            android:orientation="horizontal"
-            app:layout_constraintBottom_toTopOf="@id/mRecyclerViewMenu">
-
-            <View
-                android:layout_width="0dp"
-                android:layout_height="1dp"
-                android:layout_marginLeft="10dp"
-                android:layout_weight="1"
-                android:background="@color/gray_deep" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="5dp"
-                android:layout_marginRight="5dp"
-                android:background="@color/white"
-                android:text="@string/string_music_operation" />
-
-            <View
-                android:layout_width="0dp"
-                android:layout_height="1dp"
-                android:layout_marginRight="10dp"
-                android:layout_weight="1"
-                android:background="@color/gray_deep" />
-        </LinearLayout>
-
-        <android.support.v7.widget.RecyclerView
-            android:id="@+id/mRecyclerViewMenu"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            app:layout_constraintBottom_toTopOf="@id/mIvMenuClose"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent" />
-
-        <ImageView
-            android:id="@+id/mIvMenuClose"
-            android:layout_width="0dp"
-            android:layout_height="60dp"
-            android:background="@color/white"
-            android:paddingBottom="10dp"
-            android:src="@mipmap/icon_close_circle"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent" />
-
-    </android.support.constraint.ConstraintLayout>
 </android.support.constraint.ConstraintLayout>

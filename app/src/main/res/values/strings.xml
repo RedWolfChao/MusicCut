@@ -9,6 +9,7 @@
     <string name="string_synthetic">合成</string>
     <string name="string_translate">转换</string>
     <string name="string_other">其他</string>
+    <string name="string_mixing">混音</string>
 
     <string name="string_music_long">长度 : %1$s</string>
     <string name="string_music_type">类型 : %1$s</string>
