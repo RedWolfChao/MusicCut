@@ -7,6 +7,7 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 import icbc.com.musiccut.callback.MusicPlayCallBack;
+import icbc.com.musiccut.utils.ScanMusicUtils;
 
 /**
  * Created By RedWolf on 2018/10/15 14:35
@@ -21,6 +22,7 @@ public class MediaPlayManager {
     public void init(String musicPath, MusicPlayCallBack musicPlayCallBack) throws IOException {
         if (sMediaPlayer == null) {
             sMediaPlayer = new MediaPlayer();
+            sMediaPlayer.reset();
             sMediaPlayer.setDataSource(musicPath);
             sMediaPlayer.prepare();
             this.mMusicPlayCallBack = musicPlayCallBack;

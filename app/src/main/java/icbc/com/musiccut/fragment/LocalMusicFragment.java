@@ -17,6 +17,8 @@ import android.widget.TextView;
 
 import com.blankj.utilcode.util.ToastUtils;
 
+import org.greenrobot.eventbus.EventBus;
+
 import java.io.IOException;
 import java.util.Collections;
 import java.util.List;
@@ -26,6 +28,7 @@ import icbc.com.musiccut.adapter.LocalMusicAdapter;
 import icbc.com.musiccut.base.BaseFragment;
 import icbc.com.musiccut.callback.LocalMusicCallBack;
 import icbc.com.musiccut.callback.MusicPlayCallBack;
+import icbc.com.musiccut.model.EventShowMenu;
 import icbc.com.musiccut.model.LocalMusicEntity;
 import icbc.com.musiccut.utils.ScanMusicUtils;
 import icbc.com.musiccut.utils.manager.MediaPlayManager;
@@ -212,6 +215,6 @@ public class LocalMusicFragment extends BaseFragment implements View.OnClickList
 
     @Override
     public void onMenuClick(int pos) {
-        ToastUtils.showShort("onMenuClick 点击的是" + mLocalMusicList.get(pos).getMusicName());
+        EventBus.getDefault().post(new EventShowMenu());
     }
 }
