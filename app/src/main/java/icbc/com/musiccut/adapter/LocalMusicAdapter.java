@@ -41,13 +41,7 @@ public class LocalMusicAdapter extends RecyclerView.Adapter<LocalMusicAdapter.My
 
     public void setLocalMusicEntityList(List<LocalMusicEntity> localMusicEntityList) {
         this.mLocalMusicEntityList = localMusicEntityList;
-        notifyDataSetChanged();
     }
-
-    public void removeLocalMusicCallBack() {
-        this.mLocalMusicCallBack = null;
-    }
-
     @NonNull
     @Override
     public MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -92,7 +86,6 @@ public class LocalMusicAdapter extends RecyclerView.Adapter<LocalMusicAdapter.My
                 mLocalMusicCallBack.onMenuClick(position);
             }
         });
-
     }
 
     @Override

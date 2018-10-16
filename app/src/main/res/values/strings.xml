@@ -16,6 +16,7 @@
     <string name="string_data_empty">当前暂无已处理好的音乐</string>
     <string name="string_play_start_time">00:00</string>
     <string name="string_praise">给我们好评</string>
+    <string name="string_music_operation">音频处理</string>
 
 
 </resources>

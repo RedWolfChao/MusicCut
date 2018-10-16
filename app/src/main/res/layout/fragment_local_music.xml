@@ -11,8 +11,7 @@
         <android.support.v7.widget.RecyclerView
             android:id="@+id/mRecyclerView"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:visibility="gone" />
+            android:layout_height="match_parent" />
 
     </android.support.v4.widget.SwipeRefreshLayout>
 
@@ -22,6 +21,7 @@
         android:layout_height="match_parent"
         android:background="@color/gray"
         android:gravity="center"
-        android:text="@string/string_data_empty" />
+        android:text="@string/string_data_empty"
+        android:visibility="gone" />
 
 </android.support.constraint.ConstraintLayout>

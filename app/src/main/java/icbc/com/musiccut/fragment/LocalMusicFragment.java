@@ -13,11 +13,13 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
 import android.widget.SeekBar;
 import android.widget.TextView;
 
 import com.blankj.utilcode.util.LogUtils;
 import com.blankj.utilcode.util.ToastUtils;
+import com.google.gson.Gson;
 
 import java.io.IOException;
 import java.util.Collections;
@@ -58,6 +60,7 @@ public class LocalMusicFragment extends BaseFragment implements View.OnClickList
     private TextView mTvDataEmpty;
     private PlayDialog mPlayDialog;
     private MediaPlayManager mMediaPlayManager;
+    private boolean mIsInit;
     private final Handler mHandler = new Handler();
 
     @Nullable
@@ -87,8 +90,14 @@ public class LocalMusicFragment extends BaseFragment implements View.OnClickList
     }
 
     private void initMusicList() {
+        mIsInit = true;
         //  读取本地音乐..
-        mLocalMusicList = ScanMusicUtils.getMusicData(getActivity());
+        if (mLocalMusicList == null) {
+            mLocalMusicList = ScanMusicUtils.getMusicData(getActivity());
+        }else{
+            mLocalMusicList.clear();
+            mLocalMusicList.addAll(ScanMusicUtils.getMusicData(getActivity()));
+        }
         if (mSwipeRefreshLayout.isRefreshing()) {
             mSwipeRefreshLayout.setRefreshing(false);
         }
@@ -101,8 +110,9 @@ public class LocalMusicFragment extends BaseFragment implements View.OnClickList
             if (mLocalMusicAdapter == null) {
                 mLocalMusicAdapter = new LocalMusicAdapter(mLocalMusicList, getActivity());
                 mRecyclerView.setAdapter(mLocalMusicAdapter);
+            } else {
+                mLocalMusicAdapter.setLocalMusicEntityList(mLocalMusicList);
             }
-            mLocalMusicAdapter.notifyDataSetChanged();
             mTvDataEmpty.setVisibility(View.GONE);
             mRecyclerView.setVisibility(View.VISIBLE);
         } else {
@@ -131,6 +141,7 @@ public class LocalMusicFragment extends BaseFragment implements View.OnClickList
         mSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
+                ToastUtils.showShort("FUCK!!!!!!");
                 initMusicList();
             }
         });

@@ -8,6 +8,8 @@ import android.support.v7.widget.AppCompatEditText;
 import android.view.View;
 import android.widget.TextView;
 
+import com.blankj.utilcode.util.ToastUtils;
+
 import icbc.com.musiccut.R;
 import icbc.com.musiccut.base.BaseActivity;
 import icbc.com.musiccut.fragment.MainMusicFragment;
@@ -24,6 +26,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
     private FloatingActionButton mFabAdd;
     private MainMusicFragment mMainMusicFragment;
     private MainSettingFragment mMainSettingFragment;
+    private boolean mCanBack;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -93,6 +96,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
                 break;
             case R.id.mFabAdd:
                 //  TODO add...
+                MenuActivity.actionStart(this);
                 break;
         }
     }
@@ -111,7 +115,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
     }
 
 
-    //隐藏所有Fragment
+    //  隐藏所有Fragment
     private void hideAllFragment(FragmentTransaction fragmentTransaction) {
         if (mMainMusicFragment != null) {
             fragmentTransaction.hide(mMainMusicFragment);
@@ -119,5 +123,31 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         if (mMainSettingFragment != null) {
             fragmentTransaction.hide(mMainSettingFragment);
         }
+    }
+
+    @Override
+    public void onBackPressed() {
+        //  super.onBackPressed();
+        //  拦截back指令
+        if (mCanBack) {
+            System.exit(0);
+
+        } else {
+            ToastUtils.showShort("再按一次退出程序");
+            mCanBack = true;
+            new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    try {
+                        Thread.sleep(1500);
+                        mCanBack = false;
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }).start();
+        }
+
+
     }
 }
