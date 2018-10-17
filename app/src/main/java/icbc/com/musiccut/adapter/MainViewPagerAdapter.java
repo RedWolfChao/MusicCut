@@ -8,7 +8,7 @@ import android.support.v4.app.FragmentPagerAdapter;
 import java.util.List;
 
 import icbc.com.musiccut.base.BaseFragment;
-import icbc.com.musiccut.utils.Constants;
+import icbc.com.musiccut.constants.Constants;
 
 /**
  * Created By RedWolf on 2018/10/12 9:04

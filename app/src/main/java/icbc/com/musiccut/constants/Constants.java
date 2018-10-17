@@ -8,13 +8,16 @@ import icbc.com.musiccut.R;
  */
 
 public class Constants {
-    public static final String[] MENU_NAME_LIST = {
-            "剪切", "合成", "格式转换", "混音",
-            "变音交流", "淡入淡出", "改变音量", "录音",
-            "视频转音频", "空白声音", "声道处理"
-    };
-    public static final int[] MENU_ICON_LIST = {
-            R.mipmap.icon_cut, R.mipmap.icon_cut, R.mipmap.icon_cut, R.mipmap.icon_cut,
-            R.mipmap.icon_cut, R.mipmap.icon_cut, R.mipmap.icon_cut, R.mipmap.icon_cut,
-            R.mipmap.icon_cut, R.mipmap.icon_cut, R.mipmap.icon_cut};
+    public static final String[] TABS = {"本地", "剪切", "合成", "转换", "其他"};
+    /* EXTRA KEY */
+    public static final String EXTRA_KEY_PROCESS_MUSIC = "EXTRA_KEY_PROCESS_MUSIC";
+    public static final String EXTRA_KEY_PROCESS_NAME = "EXTRA_KEY_PROCESS_NAME";
+    public static final String EXTRA_KEY_IS_FOR_RESULT = "EXTRA_KEY_IS_FOR_RESULT";
+
+
+    /* PROCESS NAMES */
+    public static final String PRECESS_NAME_CUT_MUSIC = "剪切音乐";
+
+    /* REQUEST_CODES */
+    public static final int REQUEST_CODE_GET_MUSIC = 10001;
 }

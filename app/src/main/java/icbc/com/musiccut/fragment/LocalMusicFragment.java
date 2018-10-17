@@ -14,8 +14,6 @@ import android.view.ViewGroup;
 import android.widget.SeekBar;
 import android.widget.TextView;
 
-import org.greenrobot.eventbus.EventBus;
-
 import java.io.IOException;
 import java.util.Collections;
 import java.util.List;
@@ -25,7 +23,6 @@ import icbc.com.musiccut.adapter.LocalMusicAdapter;
 import icbc.com.musiccut.base.BaseFragment;
 import icbc.com.musiccut.callback.LocalMusicCallBack;
 import icbc.com.musiccut.callback.MusicPlayCallBack;
-import icbc.com.musiccut.model.EventShowMenu;
 import icbc.com.musiccut.model.LocalMusicEntity;
 import icbc.com.musiccut.utils.ScanMusicUtils;
 import icbc.com.musiccut.utils.manager.MediaPlayManager;
@@ -149,7 +146,7 @@ public class LocalMusicFragment extends BaseFragment implements View.OnClickList
     public void onClick(View v) {
         //
         switch (v.getId()) {
-            case R.id.mIvMusicPlay:
+            case R.id.mIvItemMusicPlay:
                 //  播放||暂停音乐
                 mMediaPlayManager.playMusic();
                 //
@@ -212,6 +209,6 @@ public class LocalMusicFragment extends BaseFragment implements View.OnClickList
 
     @Override
     public void onMenuClick(int pos) {
-        MenuDialog.build(getActivity()).show();
+        MenuDialog.build(getActivity(), mLocalMusicList.get(pos)).show();
     }
 }

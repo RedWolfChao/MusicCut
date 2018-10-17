@@ -24,7 +24,7 @@
         app:layout_constraintTop_toBottomOf="@id/mTvPinyin">
 
         <ImageView
-            android:id="@+id/mIvMusicPlay"
+            android:id="@+id/mIvItemMusicPlay"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_marginLeft="20dp"
@@ -34,7 +34,7 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
-            android:id="@+id/mTvMusicName"
+            android:id="@+id/mTvProcessMusicName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="10dp"
@@ -42,7 +42,7 @@
             android:maxLines="1"
             android:text="Around the world"
             android:textSize="@dimen/title_size"
-            app:layout_constraintLeft_toRightOf="@id/mIvMusicPlay"
+            app:layout_constraintLeft_toRightOf="@id/mIvItemMusicPlay"
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
@@ -54,8 +54,8 @@
             android:text="长度 : 04:51"
             android:textSize="@dimen/small_size"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintLeft_toRightOf="@id/mIvMusicPlay"
-            app:layout_constraintTop_toTopOf="@id/mTvMusicName" />
+            app:layout_constraintLeft_toRightOf="@id/mIvItemMusicPlay"
+            app:layout_constraintTop_toTopOf="@id/mTvProcessMusicName" />
 
         <TextView
             android:id="@+id/mTvMusicType"
@@ -67,7 +67,7 @@
             android:textSize="@dimen/small_size"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintLeft_toRightOf="@id/mTvMusicLong"
-            app:layout_constraintTop_toTopOf="@id/mTvMusicName" />
+            app:layout_constraintTop_toTopOf="@id/mTvProcessMusicName" />
 
         <TextView
             android:id="@+id/mTvMusicSize"
@@ -79,7 +79,7 @@
             android:textSize="@dimen/small_size"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintLeft_toRightOf="@id/mTvMusicType"
-            app:layout_constraintTop_toTopOf="@id/mTvMusicName" />
+            app:layout_constraintTop_toTopOf="@id/mTvProcessMusicName" />
 
         <ImageButton
             android:id="@+id/mIbMenu"

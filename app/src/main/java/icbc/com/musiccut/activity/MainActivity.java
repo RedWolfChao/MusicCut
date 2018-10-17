@@ -16,6 +16,7 @@ import com.blankj.utilcode.util.ToastUtils;
 
 import icbc.com.musiccut.R;
 import icbc.com.musiccut.base.BaseActivity;
+import icbc.com.musiccut.constants.Constants;
 import icbc.com.musiccut.fragment.MainMusicFragment;
 import icbc.com.musiccut.fragment.MainSettingFragment;
 
@@ -36,6 +37,8 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
     private ObjectAnimator mEnterInLayoutAnimator;
     private ObjectAnimator mExitAnimator;
     private ObjectAnimator mExitInLayoutAnimator;
+
+    private ImageView mIvMenuCut;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -107,10 +110,11 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         mFootTvSetting = findViewById(R.id.mFootTvSetting);
         mIvAdd = findViewById(R.id.mIvAdd);
         mTvSearch = findViewById(R.id.mTvSearch);
+        mIvMenuCut = findViewById(R.id.mIvMenuCut);
     }
 
     private void initEvent() {
-        bindClickByView(this, mFootTvMusic, mFootTvSetting, mIvAdd);
+        bindClickByView(this, mFootTvMusic, mFootTvSetting, mIvAdd, mIvMenuCut);
         mTvSearch.setOnClickListener(this);
         //  点击Music
         mFootTvMusic.performClick();
@@ -159,6 +163,12 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
                 break;
             case R.id.mTvSearch:
                 SearchActivity.actionStart(mActivity);
+                break;
+            //  MENU_START
+            case R.id.mIvMenuCut:
+                MusicProcessActivity.actionStart(mActivity, Constants.PRECESS_NAME_CUT_MUSIC);
+                mExitAnimator.start();
+                mExitInLayoutAnimator.start();
                 break;
         }
     }

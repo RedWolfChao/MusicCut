@@ -9,10 +9,12 @@ import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.ImageView;
-
-import com.blankj.utilcode.util.LogUtils;
+import android.widget.TextView;
 
 import icbc.com.musiccut.R;
+import icbc.com.musiccut.activity.MusicProcessActivity;
+import icbc.com.musiccut.constants.Constants;
+import icbc.com.musiccut.model.LocalMusicEntity;
 
 /**
  * Created By RedWolf on 2018/10/15 9:29
@@ -22,21 +24,26 @@ import icbc.com.musiccut.R;
 
 public class MenuDialog extends Dialog implements View.OnClickListener {
     private Context mContext;
+    private LocalMusicEntity mLocalMusicEntity;
     private ImageView mIvMenuClose;
+    private TextView mTvTitle;
+    private ImageView mIvMenuCut;
 
 
-    private MenuDialog(@NonNull Context context) {
+    private MenuDialog(@NonNull Context context, LocalMusicEntity entity) {
         super(context, R.style.MenuDialog);
         this.mContext = context;
+        this.mLocalMusicEntity = entity;
     }
 
     private static MenuDialog menuDialog;
 
-    public static MenuDialog build(Context context) {
+
+    public static MenuDialog build(Context context, LocalMusicEntity entity) {
         if (menuDialog != null) {
             menuDialog.cancelDialog();
         }
-        menuDialog = new MenuDialog(context);
+        menuDialog = new MenuDialog(context, entity);
         return menuDialog;
     }
 
@@ -45,7 +52,11 @@ public class MenuDialog extends Dialog implements View.OnClickListener {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.dialog_menu_layout);
         mIvMenuClose = findViewById(R.id.mIvMenuClose);
-        mIvMenuClose.setOnClickListener(this);
+        mTvTitle = findViewById(R.id.mTvTitle);
+        mIvMenuCut = findViewById(R.id.mIvMenuCut);
+        mTvTitle.setText(mLocalMusicEntity.getMusicEasyName());
+
+        setOnClickListeners(mIvMenuClose, mIvMenuCut);
 
     }
 
@@ -73,10 +84,20 @@ public class MenuDialog extends Dialog implements View.OnClickListener {
         }
     }
 
+    private void setOnClickListeners(View... views) {
+        for (View view : views) {
+            view.setOnClickListener(this);
+        }
+    }
+
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.mIvMenuClose:
+                cancelDialog();
+                break;
+            case R.id.mIvMenuCut:
+                MusicProcessActivity.actionStart(mContext, Constants.PRECESS_NAME_CUT_MUSIC, mLocalMusicEntity);
                 cancelDialog();
                 break;
         }

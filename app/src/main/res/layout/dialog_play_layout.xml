@@ -34,7 +34,7 @@
         app:layout_constraintTop_toBottomOf="@id/mTvMusicProgress" />
 
     <TextView
-        android:id="@+id/mTvMusicName"
+        android:id="@+id/mTvProcessMusicName"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginBottom="10dp"
@@ -43,11 +43,11 @@
         android:textColor="@color/black"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toLeftOf="@id/mIvMusicPlay"
+        app:layout_constraintRight_toLeftOf="@id/mIvItemMusicPlay"
         app:layout_constraintTop_toBottomOf="@id/mSbMusicProcess" />
 
     <ImageView
-        android:id="@+id/mIvMusicPlay"
+        android:id="@+id/mIvItemMusicPlay"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="10dp"
@@ -55,7 +55,7 @@
         android:padding="5dp"
         android:src="@mipmap/icon_pause_circle"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toRightOf="@id/mTvMusicName"
+        app:layout_constraintLeft_toRightOf="@id/mTvProcessMusicName"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@id/mSbMusicProcess" />
 

@@ -1,325 +1,318 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/mInMenuLayout"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
     android:layout_margin="8dp"
-    app:cardCornerRadius="8dp">
+    android:layout_height="wrap_content"
+    android:background="@drawable/white_radius_bg">
 
-    <android.support.constraint.ConstraintLayout
-        android:id="@+id/mInMenuLayout"
-        android:layout_width="match_parent"
+    <TextView
+        android:id="@+id/mTvTitle"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:background="@color/white">
+        android:layout_marginBottom="20dp"
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="5dp"
+        android:layout_marginTop="10dp"
+        android:background="@color/white"
+        android:textColor="@color/black"
+        android:textSize="@dimen/title_size"
+        app:layout_constraintBottom_toTopOf="@id/mIvMenuCut"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+    <!--MenuList START-->
+    <!-- ① -->
+    <ImageView
+        android:id="@+id/mIvMenuCut"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="4dp"
+        android:src="@mipmap/icon_menu_cut"
+        app:layout_constraintBottom_toTopOf="@id/mTvMenuCut"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toLeftOf="@id/mIvMenuSynthetic" />
 
-        <TextView
-            android:id="@+id/mTvTitle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="20dp"
-            android:layout_marginLeft="5dp"
-            android:layout_marginRight="5dp"
-            android:layout_marginTop="10dp"
-            android:background="@color/white"
-            android:textSize="@dimen/title_size"
-            android:text="@string/string_music_operation"
-            android:textColor="@color/black"
-            app:layout_constraintBottom_toTopOf="@id/mIvMenuCut"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-        <!--MenuList START-->
-        <!-- ① -->
-        <ImageView
-            android:id="@+id/mIvMenuCut"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="4dp"
-            android:src="@mipmap/icon_menu_cut"
-            app:layout_constraintBottom_toTopOf="@id/mTvMenuCut"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toLeftOf="@id/mIvMenuSynthetic" />
-
-        <TextView
-            android:id="@+id/mTvMenuCut"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="10dp"
-            android:gravity="center"
-            android:text="@string/string_cut"
-            android:textColor="@color/black"
-            app:layout_constraintBottom_toTopOf="@id/mIvMenuChangeVoice"
-            app:layout_constraintLeft_toLeftOf="@id/mIvMenuCut"
-            app:layout_constraintRight_toRightOf="@id/mIvMenuCut" />
+    <TextView
+        android:id="@+id/mTvMenuCut"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="10dp"
+        android:gravity="center"
+        android:text="@string/string_cut"
+        android:textColor="@color/black"
+        app:layout_constraintBottom_toTopOf="@id/mIvMenuChangeVoice"
+        app:layout_constraintLeft_toLeftOf="@id/mIvMenuCut"
+        app:layout_constraintRight_toRightOf="@id/mIvMenuCut" />
 
 
-        <ImageView
-            android:id="@+id/mIvMenuSynthetic"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="4dp"
-            android:layout_marginTop="10dp"
-            android:src="@mipmap/icon_menu_synthesis"
-            app:layout_constraintBottom_toTopOf="@id/mTvMenuSynthetic"
-            app:layout_constraintLeft_toRightOf="@id/mIvMenuCut"
-            app:layout_constraintRight_toLeftOf="@id/mIvMenuTranslate" />
+    <ImageView
+        android:id="@+id/mIvMenuSynthetic"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="4dp"
+        android:layout_marginTop="10dp"
+        android:src="@mipmap/icon_menu_synthesis"
+        app:layout_constraintBottom_toTopOf="@id/mTvMenuSynthetic"
+        app:layout_constraintLeft_toRightOf="@id/mIvMenuCut"
+        app:layout_constraintRight_toLeftOf="@id/mIvMenuTranslate" />
 
-        <TextView
-            android:id="@+id/mTvMenuSynthetic"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="10dp"
-            android:gravity="center"
-            android:text="@string/string_synthetic"
-            android:textColor="@color/black"
-            app:layout_constraintBottom_toTopOf="@id/mIvMenuChangeVoice"
-            app:layout_constraintLeft_toLeftOf="@id/mIvMenuSynthetic"
-            app:layout_constraintRight_toRightOf="@id/mIvMenuSynthetic" />
-
-
-        <ImageView
-            android:id="@+id/mIvMenuTranslate"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="4dp"
-            android:layout_marginTop="10dp"
-            android:src="@mipmap/icon_menu_translate"
-            app:layout_constraintBottom_toTopOf="@id/mTvMenuTranslate"
-            app:layout_constraintLeft_toRightOf="@id/mIvMenuSynthetic"
-            app:layout_constraintRight_toLeftOf="@id/mIvMenuMixing" />
-
-        <TextView
-            android:id="@+id/mTvMenuTranslate"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="10dp"
-            android:gravity="center"
-            android:text="格式转换"
-            android:textColor="@color/black"
-            app:layout_constraintBottom_toTopOf="@id/mIvMenuChangeVoice"
-            app:layout_constraintLeft_toLeftOf="@id/mIvMenuTranslate"
-            app:layout_constraintRight_toRightOf="@id/mIvMenuTranslate" />
-
-        <ImageView
-            android:id="@+id/mIvMenuMixing"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="4dp"
-            android:layout_marginTop="10dp"
-            android:src="@mipmap/icon_menu_mixing"
-            app:layout_constraintBottom_toTopOf="@id/mTvMenuMixing"
-            app:layout_constraintLeft_toRightOf="@id/mIvMenuTranslate"
-            app:layout_constraintRight_toRightOf="parent" />
-
-        <TextView
-            android:id="@+id/mTvMenuMixing"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="10dp"
-            android:gravity="center"
-            android:text="@string/string_mixing"
-            android:textColor="@color/black"
-            app:layout_constraintBottom_toTopOf="@id/mIvMenuChangeVoice"
-            app:layout_constraintLeft_toLeftOf="@id/mIvMenuMixing"
-            app:layout_constraintRight_toRightOf="@id/mIvMenuMixing" />
-        <!-- ② -->
-        <ImageView
-            android:id="@+id/mIvMenuChangeVoice"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="4dp"
-            android:src="@mipmap/icon_menu_change_voice"
-            app:layout_constraintBottom_toTopOf="@id/mTvMenuChangeVoice"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toLeftOf="@id/mIvMenuFadeInOut" />
-
-        <TextView
-            android:id="@+id/mTvMenuChangeVoice"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="10dp"
-            android:gravity="center"
-            android:text="变音交流"
-            android:textColor="@color/black"
-            app:layout_constraintBottom_toTopOf="@id/mIvMenuShare"
-            app:layout_constraintLeft_toLeftOf="@id/mIvMenuChangeVoice"
-            app:layout_constraintRight_toRightOf="@id/mIvMenuChangeVoice" />
+    <TextView
+        android:id="@+id/mTvMenuSynthetic"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="10dp"
+        android:gravity="center"
+        android:text="@string/string_synthetic"
+        android:textColor="@color/black"
+        app:layout_constraintBottom_toTopOf="@id/mIvMenuChangeVoice"
+        app:layout_constraintLeft_toLeftOf="@id/mIvMenuSynthetic"
+        app:layout_constraintRight_toRightOf="@id/mIvMenuSynthetic" />
 
 
-        <ImageView
-            android:id="@+id/mIvMenuFadeInOut"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="4dp"
-            android:src="@mipmap/icon_menu_fade_inout"
-            app:layout_constraintBottom_toTopOf="@id/mTvMenuFadeInOut"
-            app:layout_constraintLeft_toRightOf="@id/mIvMenuChangeVoice"
-            app:layout_constraintRight_toLeftOf="@id/mIvMenuChangeVolume" />
+    <ImageView
+        android:id="@+id/mIvMenuTranslate"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="4dp"
+        android:layout_marginTop="10dp"
+        android:src="@mipmap/icon_menu_translate"
+        app:layout_constraintBottom_toTopOf="@id/mTvMenuTranslate"
+        app:layout_constraintLeft_toRightOf="@id/mIvMenuSynthetic"
+        app:layout_constraintRight_toLeftOf="@id/mIvMenuMixing" />
 
-        <TextView
-            android:id="@+id/mTvMenuFadeInOut"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="10dp"
-            android:gravity="center"
-            android:text="淡入淡出"
-            android:textColor="@color/black"
-            app:layout_constraintBottom_toTopOf="@id/mIvMenuShare"
-            app:layout_constraintLeft_toLeftOf="@id/mIvMenuFadeInOut"
-            app:layout_constraintRight_toRightOf="@id/mIvMenuFadeInOut" />
+    <TextView
+        android:id="@+id/mTvMenuTranslate"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="10dp"
+        android:gravity="center"
+        android:text="格式转换"
+        android:textColor="@color/black"
+        app:layout_constraintBottom_toTopOf="@id/mIvMenuChangeVoice"
+        app:layout_constraintLeft_toLeftOf="@id/mIvMenuTranslate"
+        app:layout_constraintRight_toRightOf="@id/mIvMenuTranslate" />
 
+    <ImageView
+        android:id="@+id/mIvMenuMixing"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="4dp"
+        android:layout_marginTop="10dp"
+        android:src="@mipmap/icon_menu_mixing"
+        app:layout_constraintBottom_toTopOf="@id/mTvMenuMixing"
+        app:layout_constraintLeft_toRightOf="@id/mIvMenuTranslate"
+        app:layout_constraintRight_toRightOf="parent" />
 
-        <ImageView
-            android:id="@+id/mIvMenuChangeVolume"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="4dp"
-            android:src="@mipmap/icon_menu_volume"
-            app:layout_constraintBottom_toTopOf="@id/mTvMenuChangeVolume"
-            app:layout_constraintLeft_toRightOf="@id/mIvMenuFadeInOut"
-            app:layout_constraintRight_toLeftOf="@id/mIvMenuMusicInfo" />
+    <TextView
+        android:id="@+id/mTvMenuMixing"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="10dp"
+        android:gravity="center"
+        android:text="@string/string_mixing"
+        android:textColor="@color/black"
+        app:layout_constraintBottom_toTopOf="@id/mIvMenuChangeVoice"
+        app:layout_constraintLeft_toLeftOf="@id/mIvMenuMixing"
+        app:layout_constraintRight_toRightOf="@id/mIvMenuMixing" />
+    <!-- ② -->
+    <ImageView
+        android:id="@+id/mIvMenuChangeVoice"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="4dp"
+        android:src="@mipmap/icon_menu_change_voice"
+        app:layout_constraintBottom_toTopOf="@id/mTvMenuChangeVoice"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toLeftOf="@id/mIvMenuFadeInOut" />
 
-        <TextView
-            android:id="@+id/mTvMenuChangeVolume"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="10dp"
-            android:gravity="center"
-            android:text="改变音量"
-            android:textColor="@color/black"
-            app:layout_constraintBottom_toTopOf="@id/mIvMenuShare"
-            app:layout_constraintLeft_toLeftOf="@id/mIvMenuChangeVolume"
-            app:layout_constraintRight_toRightOf="@id/mIvMenuChangeVolume" />
-
-        <ImageView
-            android:id="@+id/mIvMenuMusicInfo"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="4dp"
-            android:src="@mipmap/icon_menu_record"
-            app:layout_constraintBottom_toTopOf="@id/mTvMenuMusicInfo"
-            app:layout_constraintLeft_toRightOf="@id/mIvMenuChangeVolume"
-            app:layout_constraintRight_toRightOf="parent" />
-
-        <TextView
-            android:id="@+id/mTvMenuMusicInfo"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="10dp"
-            android:gravity="center"
-            android:text="歌曲信息"
-            android:textColor="@color/black"
-            app:layout_constraintBottom_toTopOf="@id/mIvMenuShare"
-            app:layout_constraintLeft_toLeftOf="@id/mIvMenuMusicInfo"
-            app:layout_constraintRight_toRightOf="@id/mIvMenuMusicInfo" />
-        <!-- ③ -->
-        <ImageView
-            android:id="@+id/mIvMenuShare"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="4dp"
-            android:src="@mipmap/icon_menu_4t3"
-            app:layout_constraintBottom_toTopOf="@id/mTvMenuShare"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toLeftOf="@id/mIvMenuReName" />
-
-        <TextView
-            android:id="@+id/mTvMenuShare"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="16dp"
-            android:gravity="center"
-            android:text="分享"
-            android:textColor="@color/black"
-            app:layout_constraintBottom_toTopOf="@id/mIvMenuClose"
-            app:layout_constraintLeft_toLeftOf="@id/mIvMenuShare"
-            app:layout_constraintRight_toRightOf="@id/mIvMenuShare" />
+    <TextView
+        android:id="@+id/mTvMenuChangeVoice"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="10dp"
+        android:gravity="center"
+        android:text="变音交流"
+        android:textColor="@color/black"
+        app:layout_constraintBottom_toTopOf="@id/mIvMenuShare"
+        app:layout_constraintLeft_toLeftOf="@id/mIvMenuChangeVoice"
+        app:layout_constraintRight_toRightOf="@id/mIvMenuChangeVoice" />
 
 
-        <ImageView
-            android:id="@+id/mIvMenuReName"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="4dp"
-            android:src="@mipmap/icon_menu_blank_voice"
-            app:layout_constraintBottom_toTopOf="@id/mTvMenuReName"
-            app:layout_constraintLeft_toRightOf="@id/mIvMenuShare"
-            app:layout_constraintRight_toLeftOf="@id/mIvMenuDelete" />
+    <ImageView
+        android:id="@+id/mIvMenuFadeInOut"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="4dp"
+        android:src="@mipmap/icon_menu_fade_inout"
+        app:layout_constraintBottom_toTopOf="@id/mTvMenuFadeInOut"
+        app:layout_constraintLeft_toRightOf="@id/mIvMenuChangeVoice"
+        app:layout_constraintRight_toLeftOf="@id/mIvMenuChangeVolume" />
 
-        <TextView
-            android:id="@+id/mTvMenuReName"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="16dp"
-            android:gravity="center"
-            android:text="重命名"
-            android:textColor="@color/black"
-            app:layout_constraintBottom_toTopOf="@id/mIvMenuClose"
-            app:layout_constraintLeft_toLeftOf="@id/mIvMenuReName"
-            app:layout_constraintRight_toRightOf="@id/mIvMenuReName" />
-
-        <ImageView
-            android:id="@+id/mIvMenuDelete"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="4dp"
-            android:src="@mipmap/icon_menu_vocal_tract"
-            app:layout_constraintBottom_toTopOf="@id/mTvMenuDelete"
-            app:layout_constraintLeft_toRightOf="@id/mIvMenuSynthetic"
-            app:layout_constraintRight_toLeftOf="@id/mIvMenuMixing" />
-
-        <TextView
-            android:id="@+id/mTvMenuDelete"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="16dp"
-            android:gravity="center"
-            android:text="删除"
-            android:textColor="@color/black"
-            app:layout_constraintBottom_toTopOf="@id/mIvMenuClose"
-            app:layout_constraintLeft_toLeftOf="@id/mIvMenuDelete"
-            app:layout_constraintRight_toRightOf="@id/mIvMenuDelete" />
+    <TextView
+        android:id="@+id/mTvMenuFadeInOut"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="10dp"
+        android:gravity="center"
+        android:text="淡入淡出"
+        android:textColor="@color/black"
+        app:layout_constraintBottom_toTopOf="@id/mIvMenuShare"
+        app:layout_constraintLeft_toLeftOf="@id/mIvMenuFadeInOut"
+        app:layout_constraintRight_toRightOf="@id/mIvMenuFadeInOut" />
 
 
-        <ImageView
-            android:id="@+id/mIvMenuRingtone"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="4dp"
-            android:src="@mipmap/icon_menu_vocal_tract"
-            app:layout_constraintBottom_toTopOf="@id/mTvMenuDelete"
-            app:layout_constraintLeft_toRightOf="@id/mIvMenuDelete"
-            app:layout_constraintRight_toRightOf="parent" />
+    <ImageView
+        android:id="@+id/mIvMenuChangeVolume"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="4dp"
+        android:src="@mipmap/icon_menu_volume"
+        app:layout_constraintBottom_toTopOf="@id/mTvMenuChangeVolume"
+        app:layout_constraintLeft_toRightOf="@id/mIvMenuFadeInOut"
+        app:layout_constraintRight_toLeftOf="@id/mIvMenuMusicInfo" />
 
-        <TextView
-            android:id="@+id/mTvMenuRingtone"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="16dp"
-            android:gravity="center"
-            android:text="设为铃声"
-            android:textColor="@color/black"
-            app:layout_constraintBottom_toTopOf="@id/mIvMenuClose"
-            app:layout_constraintLeft_toLeftOf="@id/mIvMenuRingtone"
-            app:layout_constraintRight_toRightOf="@id/mIvMenuRingtone" />
+    <TextView
+        android:id="@+id/mTvMenuChangeVolume"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="10dp"
+        android:gravity="center"
+        android:text="改变音量"
+        android:textColor="@color/black"
+        app:layout_constraintBottom_toTopOf="@id/mIvMenuShare"
+        app:layout_constraintLeft_toLeftOf="@id/mIvMenuChangeVolume"
+        app:layout_constraintRight_toRightOf="@id/mIvMenuChangeVolume" />
 
-        <View
-            android:id="@+id/mLineView"
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:layout_marginBottom="8dp"
-            android:background="@color/gray_deep"
-            app:layout_constraintBottom_toTopOf="@id/mIvMenuClose" />
-        <!--MenuList END-->
-        <ImageView
-            android:id="@+id/mIvMenuClose"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:background="@color/white"
-            android:paddingBottom="10dp"
-            android:src="@mipmap/icon_down"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent" />
-    </android.support.constraint.ConstraintLayout>
-</android.support.v7.widget.CardView>
+    <ImageView
+        android:id="@+id/mIvMenuMusicInfo"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="4dp"
+        android:src="@mipmap/icon_menu_record"
+        app:layout_constraintBottom_toTopOf="@id/mTvMenuMusicInfo"
+        app:layout_constraintLeft_toRightOf="@id/mIvMenuChangeVolume"
+        app:layout_constraintRight_toRightOf="parent" />
+
+    <TextView
+        android:id="@+id/mTvMenuMusicInfo"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="10dp"
+        android:gravity="center"
+        android:text="歌曲信息"
+        android:textColor="@color/black"
+        app:layout_constraintBottom_toTopOf="@id/mIvMenuShare"
+        app:layout_constraintLeft_toLeftOf="@id/mIvMenuMusicInfo"
+        app:layout_constraintRight_toRightOf="@id/mIvMenuMusicInfo" />
+    <!-- ③ -->
+    <ImageView
+        android:id="@+id/mIvMenuShare"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="4dp"
+        android:src="@mipmap/icon_menu_4t3"
+        app:layout_constraintBottom_toTopOf="@id/mTvMenuShare"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toLeftOf="@id/mIvMenuReName" />
+
+    <TextView
+        android:id="@+id/mTvMenuShare"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp"
+        android:gravity="center"
+        android:text="分享"
+        android:textColor="@color/black"
+        app:layout_constraintBottom_toTopOf="@id/mIvMenuClose"
+        app:layout_constraintLeft_toLeftOf="@id/mIvMenuShare"
+        app:layout_constraintRight_toRightOf="@id/mIvMenuShare" />
+
+
+    <ImageView
+        android:id="@+id/mIvMenuReName"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="4dp"
+        android:src="@mipmap/icon_menu_blank_voice"
+        app:layout_constraintBottom_toTopOf="@id/mTvMenuReName"
+        app:layout_constraintLeft_toRightOf="@id/mIvMenuShare"
+        app:layout_constraintRight_toLeftOf="@id/mIvMenuDelete" />
+
+    <TextView
+        android:id="@+id/mTvMenuReName"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp"
+        android:gravity="center"
+        android:text="重命名"
+        android:textColor="@color/black"
+        app:layout_constraintBottom_toTopOf="@id/mIvMenuClose"
+        app:layout_constraintLeft_toLeftOf="@id/mIvMenuReName"
+        app:layout_constraintRight_toRightOf="@id/mIvMenuReName" />
+
+    <ImageView
+        android:id="@+id/mIvMenuDelete"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="4dp"
+        android:src="@mipmap/icon_menu_vocal_tract"
+        app:layout_constraintBottom_toTopOf="@id/mTvMenuDelete"
+        app:layout_constraintLeft_toRightOf="@id/mIvMenuSynthetic"
+        app:layout_constraintRight_toLeftOf="@id/mIvMenuMixing" />
+
+    <TextView
+        android:id="@+id/mTvMenuDelete"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp"
+        android:gravity="center"
+        android:text="删除"
+        android:textColor="@color/black"
+        app:layout_constraintBottom_toTopOf="@id/mIvMenuClose"
+        app:layout_constraintLeft_toLeftOf="@id/mIvMenuDelete"
+        app:layout_constraintRight_toRightOf="@id/mIvMenuDelete" />
+
+
+    <ImageView
+        android:id="@+id/mIvMenuRingtone"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="4dp"
+        android:src="@mipmap/icon_menu_vocal_tract"
+        app:layout_constraintBottom_toTopOf="@id/mTvMenuDelete"
+        app:layout_constraintLeft_toRightOf="@id/mIvMenuDelete"
+        app:layout_constraintRight_toRightOf="parent" />
+
+    <TextView
+        android:id="@+id/mTvMenuRingtone"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp"
+        android:gravity="center"
+        android:text="设为铃声"
+        android:textColor="@color/black"
+        app:layout_constraintBottom_toTopOf="@id/mIvMenuClose"
+        app:layout_constraintLeft_toLeftOf="@id/mIvMenuRingtone"
+        app:layout_constraintRight_toRightOf="@id/mIvMenuRingtone" />
+
+    <View
+        android:id="@+id/mLineView"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginBottom="8dp"
+        android:background="@color/gray_deep"
+        app:layout_constraintBottom_toTopOf="@id/mIvMenuClose" />
+    <!--MenuList END-->
+    <ImageView
+        android:id="@+id/mIvMenuClose"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:paddingBottom="10dp"
+        android:src="@mipmap/icon_down"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent" />
+</android.support.constraint.ConstraintLayout>

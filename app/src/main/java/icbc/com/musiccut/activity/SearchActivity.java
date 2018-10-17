@@ -23,6 +23,7 @@ import icbc.com.musiccut.adapter.LocalMusicAdapter;
 import icbc.com.musiccut.base.BaseActivity;
 import icbc.com.musiccut.callback.LocalMusicCallBack;
 import icbc.com.musiccut.callback.MusicPlayCallBack;
+import icbc.com.musiccut.constants.Constants;
 import icbc.com.musiccut.model.LocalMusicEntity;
 import icbc.com.musiccut.utils.ScanMusicUtils;
 import icbc.com.musiccut.utils.manager.MediaPlayManager;
@@ -41,18 +42,34 @@ public class SearchActivity extends BaseActivity implements LocalMusicCallBack, 
     private PlayDialog mPlayDialog;
     private MediaPlayManager mMediaPlayManager;
     private Handler mHandler = new Handler();
+    //
+    private boolean mIsForResult;
+    private Intent mIntent;
 
     public static void actionStart(Context context) {
         Intent intent = new Intent(context, SearchActivity.class);
+        intent.putExtra(Constants.EXTRA_KEY_IS_FOR_RESULT, false);
         context.startActivity(intent);
+    }
+
+    public static void actionStartForResult(BaseActivity baseActivity, int requestCode) {
+        Intent intent = new Intent(baseActivity, SearchActivity.class);
+        intent.putExtra(Constants.EXTRA_KEY_IS_FOR_RESULT, true);
+        baseActivity.startActivityForResult(intent, requestCode);
     }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search);
+        initParam();
         initView();
         initData();
+    }
+
+    private void initParam() {
+        mIntent = getIntent();
+        mIsForResult = mIntent.getBooleanExtra(Constants.EXTRA_KEY_IS_FOR_RESULT, false);
     }
 
     private void initView() {
@@ -95,7 +112,7 @@ public class SearchActivity extends BaseActivity implements LocalMusicCallBack, 
                 mRecyclerView.setLayoutManager(mManager);
             }
             if (mLocalMusicAdapter == null) {
-                mLocalMusicAdapter = new LocalMusicAdapter(mLocalMusicList, mActivity,true);
+                mLocalMusicAdapter = new LocalMusicAdapter(mLocalMusicList, mActivity, true, mIsForResult);
                 mRecyclerView.setAdapter(mLocalMusicAdapter);
             } else {
                 mLocalMusicAdapter.setLocalMusicEntityList(mLocalMusicList);
@@ -127,7 +144,8 @@ public class SearchActivity extends BaseActivity implements LocalMusicCallBack, 
     public void onClick(View v) {
         //
         switch (v.getId()) {
-            case R.id.mIvMusicPlay:
+            case R.id.mIvItemMusicPlay:
+                //  Item
                 //  播放||暂停音乐
                 mMediaPlayManager.playMusic();
                 //
@@ -180,16 +198,24 @@ public class SearchActivity extends BaseActivity implements LocalMusicCallBack, 
 
     @Override
     public void onItemClick(int pos) {
-        if (mPlayDialog != null &&
-                mPlayDialog.isShowing()) {
-            mPlayDialog.cancelDialog();
+        if (mIsForResult) {
+            //  如果来自ForResult 则 setResult
+            mIntent.putExtra(Constants.EXTRA_KEY_PROCESS_MUSIC, mLocalMusicList.get(pos));
+            setResult(RESULT_OK, mIntent);
+            finish();
         } else {
-            showDialog(mLocalMusicList.get(pos));
+            //  否则 弹出音乐播放
+            if (mPlayDialog != null &&
+                    mPlayDialog.isShowing()) {
+                mPlayDialog.cancelDialog();
+            } else {
+                showDialog(mLocalMusicList.get(pos));
+            }
         }
     }
 
     @Override
     public void onMenuClick(int pos) {
-        MenuDialog.build(this).show();
+        MenuDialog.build(this, mLocalMusicList.get(pos)).show();
     }
 }

@@ -12,9 +12,6 @@ import android.widget.ImageView;
 import android.widget.SeekBar;
 import android.widget.TextView;
 
-import com.blankj.utilcode.util.AppUtils;
-import com.blankj.utilcode.util.LogUtils;
-
 import icbc.com.musiccut.R;
 import icbc.com.musiccut.utils.TimeUtils;
 
@@ -68,9 +65,9 @@ public class PlayDialog extends Dialog {
         setContentView(R.layout.dialog_play_layout);
         mTvMusicProgress = findViewById(R.id.mTvMusicProgress);
         mTvMusicMaxProgress = findViewById(R.id.mTvMusicMaxProgress);
-        mTvMusicName = findViewById(R.id.mTvMusicName);
+        mTvMusicName = findViewById(R.id.mTvProcessMusicName);
         mSbMusicProcess = findViewById(R.id.mSbMusicProcess);
-        mIvMusicPlay = findViewById(R.id.mIvMusicPlay);
+        mIvMusicPlay = findViewById(R.id.mIvItemMusicPlay);
         //
         mTvMusicProgress.setText(R.string.string_play_start_time);
         mTvMusicName.setText(mMusicName);

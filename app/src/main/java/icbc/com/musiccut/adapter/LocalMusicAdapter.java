@@ -10,7 +10,6 @@ import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
-import com.blankj.utilcode.util.LogUtils;
 import com.blankj.utilcode.util.StringUtils;
 
 import java.util.ArrayList;
@@ -32,12 +31,20 @@ public class LocalMusicAdapter extends RecyclerView.Adapter<LocalMusicAdapter.My
     private Context mContext;
     private LocalMusicCallBack mLocalMusicCallBack;
     private boolean mIsSearch;
+    private boolean mIsForResult;
 
-    public LocalMusicAdapter(List<LocalMusicEntity> mLocalMusicEntityList, Context mContext, boolean isSearch) {
+
+    public LocalMusicAdapter(List<LocalMusicEntity> mLocalMusicEntityList, Context mContext, boolean isSearch, boolean isForResult) {
         this.mLocalMusicEntityList = mLocalMusicEntityList;
         this.mContext = mContext;
         this.mIsSearch = isSearch;
+        this.mIsForResult = isForResult;
     }
+
+    public LocalMusicAdapter(List<LocalMusicEntity> mLocalMusicEntityList, Context mContext, boolean isSearch) {
+        this(mLocalMusicEntityList, mContext, isSearch, false);
+    }
+
 
     public LocalMusicAdapter(List<LocalMusicEntity> mLocalMusicEntityList, Context mContext) {
         this(mLocalMusicEntityList, mContext, false);
@@ -95,12 +102,17 @@ public class LocalMusicAdapter extends RecyclerView.Adapter<LocalMusicAdapter.My
                 mLocalMusicCallBack.onItemClick(position);
             }
         });
-        holder.ibMenu.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                mLocalMusicCallBack.onMenuClick(position);
-            }
-        });
+        if (mIsForResult) {
+            holder.ibMenu.setVisibility(View.GONE);
+        } else {
+            holder.ibMenu.setVisibility(View.VISIBLE);
+            holder.ibMenu.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    mLocalMusicCallBack.onMenuClick(position);
+                }
+            });
+        }
     }
 
     @Override
@@ -121,7 +133,7 @@ public class LocalMusicAdapter extends RecyclerView.Adapter<LocalMusicAdapter.My
             super(itemView);
             tvPinyin = itemView.findViewById(R.id.mTvPinyin);
             vgMusicInfo = itemView.findViewById(R.id.mConsLayoutMusicInfo);
-            tvMusicName = itemView.findViewById(R.id.mTvMusicName);
+            tvMusicName = itemView.findViewById(R.id.mTvProcessMusicName);
             tvMusicLong = itemView.findViewById(R.id.mTvMusicLong);
             tvMusicType = itemView.findViewById(R.id.mTvMusicType);
             tvMusicSize = itemView.findViewById(R.id.mTvMusicSize);

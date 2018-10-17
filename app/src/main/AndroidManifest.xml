@@ -23,6 +23,7 @@
         <activity
             android:name=".activity.SearchActivity"
             android:screenOrientation="portrait" />
+        <activity android:name=".activity.MusicProcessActivity"></activity>
     </application>
 
 </manifest>
