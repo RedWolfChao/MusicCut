@@ -9,4 +9,5 @@
     <color name="gray">#F2F2F2</color>
     <color name="gray_deep">#757368</color>
     <color name="gray_deep_tran">#30757368</color>
+    <color name="gray_dialog">#666666</color>
 </resources>

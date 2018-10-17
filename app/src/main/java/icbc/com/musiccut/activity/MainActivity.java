@@ -24,6 +24,7 @@ import icbc.com.musiccut.base.BaseActivity;
 import icbc.com.musiccut.fragment.MainMusicFragment;
 import icbc.com.musiccut.fragment.MainSettingFragment;
 import icbc.com.musiccut.model.EventShowMenu;
+import icbc.com.musiccut.view.MenuDialog;
 
 /**
  * Created By RedWolf on 2018/10/12 10:11
@@ -115,8 +116,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void showMenu(EventShowMenu showMenu) {
-        mEnterAnimator.start();
-        mEnterInLayoutAnimator.start();
+        MenuDialog.build(this).show();
     }
 
     private void initView() {
