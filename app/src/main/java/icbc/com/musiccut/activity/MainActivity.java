@@ -200,10 +200,18 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
     @Override
     public void onBackPressed() {
         //  super.onBackPressed();
+        //  判断MenuLayout是否正在显示 如果正在显示 则使其消失
+        if (mExitInLayoutAnimator != null && !mExitInLayoutAnimator.isRunning()) {
+            if (mMenuLayout.getVisibility() == View.VISIBLE) {
+                mExitInLayoutAnimator.start();
+                mExitAnimator.start();
+                return;
+            }
+        }
+
         //  拦截back指令
         if (mCanBack) {
             System.exit(0);
-
         } else {
             ToastUtils.showShort("再按一次退出程序");
             mCanBack = true;
