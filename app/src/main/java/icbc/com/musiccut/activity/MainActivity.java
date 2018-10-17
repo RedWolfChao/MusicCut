@@ -2,7 +2,6 @@ package icbc.com.musiccut.activity;
 
 import android.animation.Animator;
 import android.animation.ObjectAnimator;
-import android.annotation.SuppressLint;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.constraint.ConstraintLayout;
@@ -15,23 +14,17 @@ import android.widget.TextView;
 
 import com.blankj.utilcode.util.ToastUtils;
 
-import org.greenrobot.eventbus.EventBus;
-import org.greenrobot.eventbus.Subscribe;
-import org.greenrobot.eventbus.ThreadMode;
-
 import icbc.com.musiccut.R;
 import icbc.com.musiccut.base.BaseActivity;
 import icbc.com.musiccut.fragment.MainMusicFragment;
 import icbc.com.musiccut.fragment.MainSettingFragment;
-import icbc.com.musiccut.model.EventShowMenu;
-import icbc.com.musiccut.view.MenuDialog;
 
 /**
  * Created By RedWolf on 2018/10/12 10:11
  * MainActivity.java
  */
 public class MainActivity extends BaseActivity implements View.OnClickListener {
-    private AppCompatEditText mEtSearch;
+    private TextView mTvSearch;
     private TextView mFootTvMusic;
     private TextView mFootTvSetting;
     private ImageView mIvAdd;
@@ -105,36 +98,20 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
     }
 
     private void initData() {
-        EventBus.getDefault().register(this);
     }
 
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        EventBus.getDefault().unregister(this);
-    }
-
-    @Subscribe(threadMode = ThreadMode.MAIN)
-    public void showMenu(EventShowMenu showMenu) {
-        MenuDialog.build(this).show();
-    }
 
     private void initView() {
-        mEtSearch = findViewById(R.id.mEtSearch);
+        mTvSearch = findViewById(R.id.mEtSearch);
         mFootTvMusic = findViewById(R.id.mFootTvMusic);
         mFootTvSetting = findViewById(R.id.mFootTvSetting);
         mIvAdd = findViewById(R.id.mIvAdd);
-        mEtSearch = findViewById(R.id.mEtSearch);
+        mTvSearch = findViewById(R.id.mTvSearch);
     }
 
     private void initEvent() {
         bindClickByView(this, mFootTvMusic, mFootTvSetting, mIvAdd);
-        mEtSearch.setOnFocusChangeListener(new View.OnFocusChangeListener() {
-            @Override
-            public void onFocusChange(View v, boolean hasFocus) {
-                //  TODO Search ..
-            }
-        });
+        mTvSearch.setOnClickListener(this);
         //  点击Music
         mFootTvMusic.performClick();
     }
@@ -179,6 +156,9 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
             case R.id.mIvMenuClose:
                 mExitAnimator.start();
                 mExitInLayoutAnimator.start();
+                break;
+            case R.id.mTvSearch:
+                SearchActivity.actionStart(mActivity);
                 break;
         }
     }

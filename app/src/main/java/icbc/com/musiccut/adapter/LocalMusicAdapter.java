@@ -1,6 +1,7 @@
 package icbc.com.musiccut.adapter;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -30,10 +31,16 @@ public class LocalMusicAdapter extends RecyclerView.Adapter<LocalMusicAdapter.My
     private List<LocalMusicEntity> mLocalMusicEntityList = new ArrayList<>();
     private Context mContext;
     private LocalMusicCallBack mLocalMusicCallBack;
+    private boolean mIsSearch;
 
-    public LocalMusicAdapter(List<LocalMusicEntity> mLocalMusicEntityList, Context mContext) {
+    public LocalMusicAdapter(List<LocalMusicEntity> mLocalMusicEntityList, Context mContext, boolean isSearch) {
         this.mLocalMusicEntityList = mLocalMusicEntityList;
         this.mContext = mContext;
+        this.mIsSearch = isSearch;
+    }
+
+    public LocalMusicAdapter(List<LocalMusicEntity> mLocalMusicEntityList, Context mContext) {
+        this(mLocalMusicEntityList, mContext, false);
     }
 
     public void addLocalMusicCallBack(LocalMusicCallBack localMusicCallBack) {
@@ -66,6 +73,9 @@ public class LocalMusicAdapter extends RecyclerView.Adapter<LocalMusicAdapter.My
             //  第一个位置肯定要显示拼音
             holder.tvPinyin.setVisibility(View.VISIBLE);
             holder.tvPinyin.setText(entity.getMusicPinyin());
+            if (mIsSearch) {
+                holder.tvPinyin.setBackgroundColor(Color.WHITE);
+            }
         } else {
             //  如果当前拼音和上一个拼音相同,那么拼音Item不显示
             if (StringUtils.equals(entity.getMusicPinyin(), mLocalMusicEntityList.get(position - 1).getMusicPinyin())) {
@@ -73,6 +83,9 @@ public class LocalMusicAdapter extends RecyclerView.Adapter<LocalMusicAdapter.My
             } else {
                 holder.tvPinyin.setVisibility(View.VISIBLE);
                 holder.tvPinyin.setText(entity.getMusicPinyin());
+                if (mIsSearch) {
+                    holder.tvPinyin.setBackgroundColor(Color.WHITE);
+                }
             }
         }
         //  event

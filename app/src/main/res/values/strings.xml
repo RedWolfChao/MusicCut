@@ -25,6 +25,9 @@
     <string name="string_change_theme">切换主题</string>
     <string name="string_feedback">反馈</string>
     <string name="string_common_question">常见问题</string>
+    <string name="string_tips">
+        温馨提示:如果列表中没有您要找的音乐,您可以输入音乐关键字后点击\"扫描\"按钮从手机内存中扫描音乐;
+        如果您知道音乐在内存中的位置,您可以点击\"路径\"按钮,从文件浏览器中选取音乐。</string>
 
 
 </resources>

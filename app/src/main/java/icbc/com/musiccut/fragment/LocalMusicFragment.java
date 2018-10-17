@@ -1,6 +1,5 @@
 package icbc.com.musiccut.fragment;
 
-import android.annotation.SuppressLint;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.os.Handler;
@@ -14,8 +13,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.SeekBar;
 import android.widget.TextView;
-
-import com.blankj.utilcode.util.ToastUtils;
 
 import org.greenrobot.eventbus.EventBus;
 
@@ -32,6 +29,7 @@ import icbc.com.musiccut.model.EventShowMenu;
 import icbc.com.musiccut.model.LocalMusicEntity;
 import icbc.com.musiccut.utils.ScanMusicUtils;
 import icbc.com.musiccut.utils.manager.MediaPlayManager;
+import icbc.com.musiccut.view.MenuDialog;
 import icbc.com.musiccut.view.PlayDialog;
 
 /**
@@ -75,7 +73,6 @@ public class LocalMusicFragment extends BaseFragment implements View.OnClickList
         initEvent();
     }
 
-    @SuppressLint("HandlerLeak")
     private void initData() {
         mMediaPlayManager = new MediaPlayManager();
         initMusicList();
@@ -215,6 +212,6 @@ public class LocalMusicFragment extends BaseFragment implements View.OnClickList
 
     @Override
     public void onMenuClick(int pos) {
-        EventBus.getDefault().post(new EventShowMenu());
+        MenuDialog.build(getActivity()).show();
     }
 }
