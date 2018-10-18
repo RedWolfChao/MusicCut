@@ -264,7 +264,7 @@ public class SearchActivity extends BaseActivity implements LocalMusicCallBack, 
         try {
             startActivityForResult(Intent.createChooser(intent, "XXX"), Constants.REQUEST_CODE_GET_MUSIC);
         } catch (android.content.ActivityNotFoundException ex) {
-            // Potentially direct the user to the Market with a Dialog
+            //  TODO 直接通过Intent跳转到应用市场让他下载..
             ToastUtils.showShort("请安装文件管理器");
         }
     }
