@@ -6,7 +6,6 @@ import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.constraint.ConstraintLayout;
 import android.support.v4.app.FragmentTransaction;
-import android.support.v7.widget.AppCompatEditText;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.ImageView;
