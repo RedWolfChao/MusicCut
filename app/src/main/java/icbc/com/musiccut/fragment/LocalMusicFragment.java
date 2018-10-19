@@ -1,6 +1,7 @@
 package icbc.com.musiccut.fragment;
 
 import android.content.DialogInterface;
+import android.media.audiofx.Visualizer;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.NonNull;
@@ -23,9 +24,9 @@ import icbc.com.musiccut.adapter.LocalMusicAdapter;
 import icbc.com.musiccut.base.BaseFragment;
 import icbc.com.musiccut.callback.LocalMusicCallBack;
 import icbc.com.musiccut.callback.MusicPlayCallBack;
+import icbc.com.musiccut.manager.MediaPlayManager;
 import icbc.com.musiccut.model.LocalMusicEntity;
 import icbc.com.musiccut.utils.ScanMusicUtils;
-import icbc.com.musiccut.utils.manager.MediaPlayManager;
 import icbc.com.musiccut.view.MenuDialog;
 import icbc.com.musiccut.view.PlayDialog;
 
@@ -36,8 +37,9 @@ import icbc.com.musiccut.view.PlayDialog;
 
 public class LocalMusicFragment extends BaseFragment implements View.OnClickListener,
         SeekBar.OnSeekBarChangeListener, MusicPlayCallBack,
-        DialogInterface.OnDismissListener, LocalMusicCallBack {
+        DialogInterface.OnDismissListener, LocalMusicCallBack{
     private static LocalMusicFragment sLocalMusicFragment;
+    private Visualizer mVisualizer;
 
     public static LocalMusicFragment getInstance() {
         if (sLocalMusicFragment == null) {
@@ -80,12 +82,7 @@ public class LocalMusicFragment extends BaseFragment implements View.OnClickList
         mTvDataEmpty = view.findViewById(R.id.mTvDataEmpty);
         mSwipeRefreshLayout = view.findViewById(R.id.mSwipeRefreshLayout);
         mSwipeRefreshLayout.setColorSchemeResources(R.color.colorPrimary);
-        mSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-            @Override
-            public void onRefresh() {
-                initMusicList();
-            }
-        });
+        mSwipeRefreshLayout.setOnRefreshListener(() -> initMusicList());
 
     }
 
@@ -181,12 +178,9 @@ public class LocalMusicFragment extends BaseFragment implements View.OnClickList
 
     @Override
     public void onMusicProgress(final int progress) {
-        mHandler.post(new Runnable() {
-            @Override
-            public void run() {
-                mPlayDialog.setMusicProgress(progress);
-                mPlayDialog.setSeekBarProgress(progress);
-            }
+        mHandler.post(() -> {
+            mPlayDialog.setMusicProgress(progress);
+            mPlayDialog.setSeekBarProgress(progress);
         });
     }
 
@@ -207,8 +201,10 @@ public class LocalMusicFragment extends BaseFragment implements View.OnClickList
         }
     }
 
+
     @Override
     public void onMenuClick(int pos) {
         MenuDialog.build(getActivity(), mLocalMusicList.get(pos)).show();
     }
+
 }

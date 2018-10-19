@@ -2,14 +2,11 @@ package icbc.com.musiccut.activity;
 
 import android.content.Context;
 import android.content.Intent;
-import android.support.constraint.ConstraintLayout;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.constraint.ConstraintLayout;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
-
-import com.blankj.utilcode.util.ToastUtils;
 
 import icbc.com.musiccut.R;
 import icbc.com.musiccut.base.BaseActivity;

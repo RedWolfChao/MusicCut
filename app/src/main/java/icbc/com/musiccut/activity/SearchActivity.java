@@ -23,7 +23,6 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.SeekBar;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.blankj.utilcode.util.LogUtils;
 import com.blankj.utilcode.util.ToastUtils;
@@ -31,9 +30,7 @@ import com.blankj.utilcode.util.ToastUtils;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -43,13 +40,13 @@ import icbc.com.musiccut.base.BaseActivity;
 import icbc.com.musiccut.callback.LocalMusicCallBack;
 import icbc.com.musiccut.callback.MusicPlayCallBack;
 import icbc.com.musiccut.constants.Constants;
+import icbc.com.musiccut.manager.MediaPlayManager;
 import icbc.com.musiccut.model.LocalMusicEntity;
 import icbc.com.musiccut.utils.ScanMusicUtils;
-import icbc.com.musiccut.utils.manager.MediaPlayManager;
 import icbc.com.musiccut.view.MenuDialog;
 import icbc.com.musiccut.view.PlayDialog;
 
-public class SearchActivity extends BaseActivity implements LocalMusicCallBack, DialogInterface.OnDismissListener, View.OnClickListener, SeekBar.OnSeekBarChangeListener, MusicPlayCallBack {
+public class SearchActivity extends BaseActivity implements LocalMusicCallBack, DialogInterface.OnDismissListener, View.OnClickListener, SeekBar.OnSeekBarChangeListener, MusicPlayCallBack{
     private TextView mTvBack;
     private EditText mEtSearch;
     private Button mBtnScan, mBtnPath;
@@ -138,12 +135,7 @@ public class SearchActivity extends BaseActivity implements LocalMusicCallBack, 
         mRecyclerView = findViewById(R.id.mRecyclerView);
         mSwipeRefreshLayout = findViewById(R.id.mSwipeRefreshLayout);
         mSwipeRefreshLayout.setColorSchemeResources(R.color.colorPrimary);
-        mSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-            @Override
-            public void onRefresh() {
-                initMusicList();
-            }
-        });
+        mSwipeRefreshLayout.setOnRefreshListener(this::initMusicList);
 
     }
 
@@ -241,12 +233,9 @@ public class SearchActivity extends BaseActivity implements LocalMusicCallBack, 
 
     @Override
     public void onMusicProgress(final int progress) {
-        mHandler.post(new Runnable() {
-            @Override
-            public void run() {
-                mPlayDialog.setMusicProgress(progress);
-                mPlayDialog.setSeekBarProgress(progress);
-            }
+        mHandler.post(() -> {
+            mPlayDialog.setMusicProgress(progress);
+            mPlayDialog.setSeekBarProgress(progress);
         });
     }
 
@@ -386,20 +375,15 @@ public class SearchActivity extends BaseActivity implements LocalMusicCallBack, 
     public String getDataColumn(Context context, Uri uri, String selection,
                                 String[] selectionArgs) {
 
-        Cursor cursor = null;
         final String column = "_data";
         final String[] projection = {column};
 
-        try {
-            cursor = context.getContentResolver().query(uri, projection, selection, selectionArgs,
-                    null);
+        try (Cursor cursor = context.getContentResolver().query(uri, projection, selection, selectionArgs,
+                null)) {
             if (cursor != null && cursor.moveToFirst()) {
                 final int column_index = cursor.getColumnIndexOrThrow(column);
                 return cursor.getString(column_index);
             }
-        } finally {
-            if (cursor != null)
-                cursor.close();
         }
         return null;
     }
@@ -427,4 +411,5 @@ public class SearchActivity extends BaseActivity implements LocalMusicCallBack, 
     public boolean isMediaDocument(Uri uri) {
         return "com.android.providers.media.documents".equals(uri.getAuthority());
     }
+
 }

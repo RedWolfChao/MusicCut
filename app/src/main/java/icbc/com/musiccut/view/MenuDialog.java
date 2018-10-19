@@ -1,5 +1,6 @@
 package icbc.com.musiccut.view;
 
+import android.annotation.SuppressLint;
 import android.app.Dialog;
 import android.content.Context;
 import android.os.Bundle;
@@ -25,9 +26,6 @@ import icbc.com.musiccut.model.LocalMusicEntity;
 public class MenuDialog extends Dialog implements View.OnClickListener {
     private Context mContext;
     private LocalMusicEntity mLocalMusicEntity;
-    private ImageView mIvMenuClose;
-    private TextView mTvTitle;
-    private ImageView mIvMenuCut;
 
 
     private MenuDialog(@NonNull Context context, LocalMusicEntity entity) {
@@ -36,6 +34,7 @@ public class MenuDialog extends Dialog implements View.OnClickListener {
         this.mLocalMusicEntity = entity;
     }
 
+    @SuppressLint("StaticFieldLeak")
     private static MenuDialog menuDialog;
 
 
@@ -51,9 +50,9 @@ public class MenuDialog extends Dialog implements View.OnClickListener {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.dialog_menu_layout);
-        mIvMenuClose = findViewById(R.id.mIvMenuClose);
-        mTvTitle = findViewById(R.id.mTvTitle);
-        mIvMenuCut = findViewById(R.id.mIvMenuCut);
+        ImageView mIvMenuClose = findViewById(R.id.mIvMenuClose);
+        TextView mTvTitle = findViewById(R.id.mTvTitle);
+        ImageView mIvMenuCut = findViewById(R.id.mIvMenuCut);
         mTvTitle.setText(mLocalMusicEntity.getMusicEasyName());
 
         setOnClickListeners(mIvMenuClose, mIvMenuCut);
@@ -61,8 +60,7 @@ public class MenuDialog extends Dialog implements View.OnClickListener {
     }
 
 
-    public void cancelDialog() {
-
+    private void cancelDialog() {
         this.dismiss();
         cancel();
     }

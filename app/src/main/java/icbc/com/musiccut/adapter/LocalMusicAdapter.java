@@ -41,7 +41,7 @@ public class LocalMusicAdapter extends RecyclerView.Adapter<LocalMusicAdapter.My
         this.mIsForResult = isForResult;
     }
 
-    public LocalMusicAdapter(List<LocalMusicEntity> mLocalMusicEntityList, Context mContext, boolean isSearch) {
+    private LocalMusicAdapter(List<LocalMusicEntity> mLocalMusicEntityList, Context mContext, boolean isSearch) {
         this(mLocalMusicEntityList, mContext, isSearch, false);
     }
 
@@ -96,22 +96,12 @@ public class LocalMusicAdapter extends RecyclerView.Adapter<LocalMusicAdapter.My
             }
         }
         //  event
-        holder.vgMusicInfo.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                mLocalMusicCallBack.onItemClick(position);
-            }
-        });
+        holder.vgMusicInfo.setOnClickListener(v -> mLocalMusicCallBack.onItemClick(position));
         if (mIsForResult) {
             holder.ibMenu.setVisibility(View.GONE);
         } else {
             holder.ibMenu.setVisibility(View.VISIBLE);
-            holder.ibMenu.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    mLocalMusicCallBack.onMenuClick(position);
-                }
-            });
+            holder.ibMenu.setOnClickListener(v -> mLocalMusicCallBack.onMenuClick(position));
         }
     }
 
@@ -129,7 +119,7 @@ public class LocalMusicAdapter extends RecyclerView.Adapter<LocalMusicAdapter.My
         TextView tvMusicSize;
         ImageButton ibMenu;
 
-        public MyViewHolder(View itemView) {
+        MyViewHolder(View itemView) {
             super(itemView);
             tvPinyin = itemView.findViewById(R.id.mTvPinyin);
             vgMusicInfo = itemView.findViewById(R.id.mConsLayoutMusicInfo);

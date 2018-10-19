@@ -1,5 +1,6 @@
 package icbc.com.musiccut.view;
 
+import android.annotation.SuppressLint;
 import android.app.Dialog;
 import android.content.Context;
 import android.os.Bundle;
@@ -48,6 +49,7 @@ public class PlayDialog extends Dialog {
         this.mContext = context;
     }
 
+    @SuppressLint("StaticFieldLeak")
     private static PlayDialog playDialog;
 
     public static PlayDialog build(Context context, long maxProgress, String musicName,

@@ -1,13 +1,17 @@
-package icbc.com.musiccut.utils.manager;
+package icbc.com.musiccut.manager;
 
 import android.media.MediaPlayer;
+import android.media.audiofx.Visualizer;
+import android.net.Uri;
+
+import com.blankj.utilcode.util.LogUtils;
+import com.blankj.utilcode.util.Utils;
 
 import java.io.IOException;
 import java.util.Timer;
 import java.util.TimerTask;
 
 import icbc.com.musiccut.callback.MusicPlayCallBack;
-import icbc.com.musiccut.utils.ScanMusicUtils;
 
 /**
  * Created By RedWolf on 2018/10/15 14:35
@@ -21,10 +25,8 @@ public class MediaPlayManager {
 
     public void init(String musicPath, MusicPlayCallBack musicPlayCallBack) throws IOException {
         if (sMediaPlayer == null) {
-            sMediaPlayer = new MediaPlayer();
-            sMediaPlayer.reset();
-            sMediaPlayer.setDataSource(musicPath);
-            sMediaPlayer.prepare();
+            Uri uriPath = Uri.parse(musicPath);
+            sMediaPlayer = MediaPlayer.create(Utils.getApp(), uriPath);
             this.mMusicPlayCallBack = musicPlayCallBack;
             mTimer = new Timer();
             mTimer.schedule(new TimerTask() {
@@ -83,5 +85,10 @@ public class MediaPlayManager {
      */
     public boolean isPlaying() {
         return sMediaPlayer != null && sMediaPlayer.isPlaying();
+    }
+
+
+    public MediaPlayer getInstance() {
+        return sMediaPlayer;
     }
 }

@@ -107,12 +107,7 @@ public class SyntheticMusicFragment extends BaseFragment {
                 }
             });
         }
-        mSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-            @Override
-            public void onRefresh() {
-                initMusicList();
-            }
-        });
+        mSwipeRefreshLayout.setOnRefreshListener(this::initMusicList);
 
     }
 

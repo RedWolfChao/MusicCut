@@ -2,11 +2,12 @@ package icbc.com.musiccut.activity;
 
 import android.animation.Animator;
 import android.animation.ObjectAnimator;
+import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.constraint.ConstraintLayout;
 import android.support.v4.app.FragmentTransaction;
-import android.view.MotionEvent;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -18,6 +19,8 @@ import icbc.com.musiccut.base.BaseActivity;
 import icbc.com.musiccut.constants.Constants;
 import icbc.com.musiccut.fragment.MainMusicFragment;
 import icbc.com.musiccut.fragment.MainSettingFragment;
+import icbc.com.musiccut.permissions.PermissionsActivity;
+import icbc.com.musiccut.permissions.PermissionsChecker;
 
 /**
  * Created By RedWolf on 2018/10/12 10:11
@@ -49,6 +52,17 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         initMenu();
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        PermissionsChecker checker = new PermissionsChecker(this);
+        if (checker.lakesPermissions(Constants.PERMISSIONS)) {
+            PermissionsActivity.startActivityForResult(this, Constants.REQUEST_CODE_GET_PERMISSION, Constants.PERMISSIONS);
+        }
+
+    }
+
+    @SuppressLint("ClickableViewAccessibility")
     private void initMenu() {
         mMenuLayout = findViewById(R.id.mMenuLayout);
         mInMenuLayout = findViewById(R.id.mInMenuLayout);
@@ -57,12 +71,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         mIvMenuClose.setOnClickListener(this);
         initAnim();
         //  拦截点击事件
-        mMenuLayout.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                return true;
-            }
-        });
+        mMenuLayout.setOnTouchListener((v, event) -> true);
 
 
     }
@@ -214,17 +223,22 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         } else {
             ToastUtils.showShort("再按一次退出程序");
             mCanBack = true;
-            new Thread(new Runnable() {
-                @Override
-                public void run() {
-                    try {
-                        Thread.sleep(1500);
-                        mCanBack = false;
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
+            new Thread(() -> {
+                try {
+                    Thread.sleep(1500);
+                    mCanBack = false;
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
                 }
             }).start();
+        }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == Constants.REQUEST_CODE_GET_PERMISSION && resultCode == PermissionsActivity.PERMISSIONS_DENIED) {
+            finish();
         }
     }
 
