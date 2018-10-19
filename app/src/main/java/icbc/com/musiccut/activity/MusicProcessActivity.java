@@ -2,18 +2,31 @@ package icbc.com.musiccut.activity;
 
 import android.content.Context;
 import android.content.Intent;
+import android.media.audiofx.Visualizer;
 import android.os.Bundle;
 import android.support.constraint.ConstraintLayout;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.blankj.utilcode.util.LogUtils;
+import com.blankj.utilcode.util.ToastUtils;
+
+import java.io.IOException;
+import java.util.Arrays;
+
 import icbc.com.musiccut.R;
 import icbc.com.musiccut.base.BaseActivity;
+import icbc.com.musiccut.callback.MusicPlayCallBack;
 import icbc.com.musiccut.constants.Constants;
+import icbc.com.musiccut.manager.MediaPlayManager;
 import icbc.com.musiccut.model.LocalMusicEntity;
+import icbc.com.musiccut.view.SpectrumView;
 
-public class MusicProcessActivity extends BaseActivity implements View.OnClickListener {
+public class MusicProcessActivity extends BaseActivity implements View.OnClickListener, MusicPlayCallBack {
+    private MediaPlayManager mMediaPlayManager;
+    private Visualizer mVisualizer;
+
     public static void actionStart(Context context, String processName, LocalMusicEntity entity) {
         Intent intent = new Intent(context, MusicProcessActivity.class);
         intent.putExtra(Constants.EXTRA_KEY_PROCESS_MUSIC, entity);
@@ -28,8 +41,9 @@ public class MusicProcessActivity extends BaseActivity implements View.OnClickLi
     }
 
     private TextView mTvTitle, mTvExplain, mTvProcessMusicName;
-    private ImageView mIvBack, mIvProcess, mIvProcessRight;
+    private ImageView mIvBack, mIvProcess, mIvProcessRight, mIvCutPlay;
     private ConstraintLayout mChooseLayout;
+    private SpectrumView mSpectrumView;
 
     private LocalMusicEntity mLocalMusicEntity;
     private String mProcessName;
@@ -40,8 +54,13 @@ public class MusicProcessActivity extends BaseActivity implements View.OnClickLi
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_music_process);
         initParam();
+        initData();
         initView();
         initEvent();
+    }
+
+    private void initData() {
+        mMediaPlayManager = new MediaPlayManager();
     }
 
 
@@ -59,9 +78,11 @@ public class MusicProcessActivity extends BaseActivity implements View.OnClickLi
         mIvBack = findViewById(R.id.mIvBack);
         mIvProcess = findViewById(R.id.mIvProcess);
         mChooseLayout = findViewById(R.id.mChooseLayout);
+        mIvCutPlay = findViewById(R.id.mIvCutPlay);
         //
         mTvTitle.setText(mProcessName);
         if (mLocalMusicEntity != null) {
+            startVisualiser();
             mTvProcessMusicName.setText(mLocalMusicEntity.getMusicEasyName());
         } else {
             mTvProcessMusicName.setText(getResources().getString(R.string.string_click_choose_music));
@@ -70,7 +91,56 @@ public class MusicProcessActivity extends BaseActivity implements View.OnClickLi
 
 
     private void initEvent() {
-        bindClickByView(this, mTvExplain, mIvBack, mChooseLayout);
+        bindClickByView(this, mTvExplain, mIvBack, mChooseLayout, mIvCutPlay);
+    }
+
+    /**
+     * 获取扩音器中的声音信息
+     */
+    private void startVisualiser() {
+        if (mVisualizer != null) {
+            mVisualizer.setEnabled(false);
+            mVisualizer.release();
+        }
+        mVisualizer = new Visualizer(0); // 初始化
+        mVisualizer.setDataCaptureListener(new Visualizer.OnDataCaptureListener() {
+            @Override
+            public void onWaveFormDataCapture(Visualizer visualizer, byte[] waveform, int samplingRate) {
+                if (mMediaPlayManager != null && mMediaPlayManager.isPlaying()) {
+                    mSpectrumView.startDraw(waveform);
+                }
+            }
+
+            @Override
+            public void onFftDataCapture(Visualizer visualizer, byte[] fft, int samplingRate) {
+
+            }
+        }, Visualizer.getMaxCaptureRate(), true, false);
+        mVisualizer.setCaptureSize(Constants.CAPTURE_SIZE);
+        mVisualizer.setEnabled(true);
+    }
+
+    @Override
+    protected void onPause() {
+        if (mVisualizer != null) {
+            mVisualizer.setEnabled(false);
+            mVisualizer.release();
+        }
+        if (mMediaPlayManager != null && mMediaPlayManager.isPlaying()) {
+            mMediaPlayManager.stopMusic();
+        }
+        if (mSpectrumView != null) {
+            mSpectrumView.stopDraw();
+            mSpectrumView = null;
+        }
+        super.onPause();
+
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        mSpectrumView = findViewById(R.id.mSpectrumView);
     }
 
     @Override
@@ -79,6 +149,19 @@ public class MusicProcessActivity extends BaseActivity implements View.OnClickLi
             case R.id.mTvExplain:
                 break;
             case R.id.mIvBack:
+                break;
+            case R.id.mIvCutPlay:
+                if (mLocalMusicEntity == null) {
+                    ToastUtils.showShort("请先选择音乐");
+                    return;
+                }
+                //  播放音乐
+                try {
+                    mMediaPlayManager.init(mLocalMusicEntity.getMusicPath(), this);
+                    mMediaPlayManager.playMusic();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
                 break;
             case R.id.mChooseLayout:
                 SearchActivity.actionStartForResult(this, Constants.REQUEST_CODE_GET_MUSIC);
@@ -98,8 +181,14 @@ public class MusicProcessActivity extends BaseActivity implements View.OnClickLi
                 if (mLocalMusicEntity == null) {
                     return;
                 }
+                startVisualiser();
                 mTvProcessMusicName.setText(mLocalMusicEntity.getMusicEasyName());
                 break;
         }
+    }
+
+    @Override
+    public void onMusicProgress(int progress) {
+
     }
 }

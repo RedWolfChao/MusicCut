@@ -18,6 +18,7 @@ import android.widget.TextView;
 import com.blankj.utilcode.util.LogUtils;
 
 import java.io.IOException;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
@@ -74,7 +75,7 @@ public class LocalMusicFragment extends BaseFragment implements View.OnClickList
         initData();
         initEvent();
         //
-        startVisualiser();
+//        startVisualiser();
     }
 
     private void initData() {
@@ -153,7 +154,8 @@ public class LocalMusicFragment extends BaseFragment implements View.OnClickList
             @Override
             public void onWaveFormDataCapture(Visualizer visualizer, byte[] waveform, int samplingRate) {
                 if (mMediaPlayManager.isPlaying()) {
-                    LogUtils.iTag("RedWolf", "onWaveFormDataCapture:waveform  ", waveform);
+                    LogUtils.iTag("RedWolf", "onWaveFormDataCapture:waveform  ", Arrays.toString(waveform));
+                    LogUtils.iTag("RedWolf", "onWaveFormDataCapture:waveform  ", waveform.length);
                     LogUtils.iTag("RedWolf", "onWaveFormDataCapture:samplingRate  ", samplingRate);
                 }
             }
