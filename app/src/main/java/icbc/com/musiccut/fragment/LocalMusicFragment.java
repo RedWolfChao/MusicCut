@@ -15,6 +15,8 @@ import android.view.ViewGroup;
 import android.widget.SeekBar;
 import android.widget.TextView;
 
+import com.blankj.utilcode.util.LogUtils;
+
 import java.io.IOException;
 import java.util.Collections;
 import java.util.List;
@@ -24,6 +26,7 @@ import icbc.com.musiccut.adapter.LocalMusicAdapter;
 import icbc.com.musiccut.base.BaseFragment;
 import icbc.com.musiccut.callback.LocalMusicCallBack;
 import icbc.com.musiccut.callback.MusicPlayCallBack;
+import icbc.com.musiccut.constants.Constants;
 import icbc.com.musiccut.manager.MediaPlayManager;
 import icbc.com.musiccut.model.LocalMusicEntity;
 import icbc.com.musiccut.utils.ScanMusicUtils;
@@ -37,7 +40,7 @@ import icbc.com.musiccut.view.PlayDialog;
 
 public class LocalMusicFragment extends BaseFragment implements View.OnClickListener,
         SeekBar.OnSeekBarChangeListener, MusicPlayCallBack,
-        DialogInterface.OnDismissListener, LocalMusicCallBack{
+        DialogInterface.OnDismissListener, LocalMusicCallBack {
     private static LocalMusicFragment sLocalMusicFragment;
     private Visualizer mVisualizer;
 
@@ -70,6 +73,8 @@ public class LocalMusicFragment extends BaseFragment implements View.OnClickList
         initView(view);
         initData();
         initEvent();
+        //
+        startVisualiser();
     }
 
     private void initData() {
@@ -137,6 +142,29 @@ public class LocalMusicFragment extends BaseFragment implements View.OnClickList
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    /**
+     * 获取扩音器中的声音信息
+     */
+    private void startVisualiser() {
+        mVisualizer = new Visualizer(0); // 初始化
+        mVisualizer.setDataCaptureListener(new Visualizer.OnDataCaptureListener() {
+            @Override
+            public void onWaveFormDataCapture(Visualizer visualizer, byte[] waveform, int samplingRate) {
+                if (mMediaPlayManager.isPlaying()) {
+                    LogUtils.iTag("RedWolf", "onWaveFormDataCapture:waveform  ", waveform);
+                    LogUtils.iTag("RedWolf", "onWaveFormDataCapture:samplingRate  ", samplingRate);
+                }
+            }
+
+            @Override
+            public void onFftDataCapture(Visualizer visualizer, byte[] fft, int samplingRate) {
+
+            }
+        }, Visualizer.getMaxCaptureRate(), true, false);
+        mVisualizer.setCaptureSize(Constants.CAPTURE_SIZE);
+        mVisualizer.setEnabled(true);
     }
 
     @Override

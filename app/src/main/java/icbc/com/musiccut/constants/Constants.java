@@ -8,6 +8,12 @@ import android.Manifest;
  */
 
 public class Constants {
+
+    /* VISUALIZER */
+    // 获取这些数据, 用于显示
+    public static final int CAPTURE_SIZE = 1024;
+
+    /* TAB */
     public static final String[] TABS = {"本地", "剪切", "合成", "转换", "其他"};
     /* EXTRA KEY */
     public static final String EXTRA_KEY_PROCESS_MUSIC = "EXTRA_KEY_PROCESS_MUSIC";

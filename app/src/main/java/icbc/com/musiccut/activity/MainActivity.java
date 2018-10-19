@@ -5,6 +5,7 @@ import android.animation.ObjectAnimator;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
+import android.media.audiofx.Visualizer;
 import android.os.Bundle;
 import android.support.constraint.ConstraintLayout;
 import android.support.v4.app.FragmentTransaction;
@@ -12,6 +13,7 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.blankj.utilcode.util.LogUtils;
 import com.blankj.utilcode.util.ToastUtils;
 
 import icbc.com.musiccut.R;
@@ -204,6 +206,8 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
             fragmentTransaction.hide(mMainSettingFragment);
         }
     }
+
+
 
     @Override
     public void onBackPressed() {

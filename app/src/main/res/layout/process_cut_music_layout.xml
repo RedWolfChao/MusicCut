@@ -5,38 +5,320 @@
     android:layout_height="wrap_content"
     android:background="@drawable/white_radius_bg">
 
-    <ImageView
-        android:id="@+id/mIvProcess"
+    <TextView
+        android:id="@+id/mTvCutMusicSelected"
         android:layout_width="0dp"
-        android:layout_height="@dimen/title_height"
-        android:layout_marginBottom="8dp"
-        android:layout_marginTop="8dp"
-        android:padding="5dp"
-        android:src="@mipmap/ic_launcher"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="80dp"
+        android:gravity="center"
+        android:text="已选:01:15"
         app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toLeftOf="@id/mTvCutMusicPlayed"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/mTvProcessMusicName"
+        android:id="@+id/mTvCutMusicPlayed"
         android:layout_width="0dp"
-        android:layout_height="@dimen/title_height"
-        android:gravity="center_vertical"
-        android:text="Around The World"
-        android:textColor="@color/black"
-        app:layout_constraintBottom_toBottomOf="@id/mIvProcess"
-        app:layout_constraintLeft_toRightOf="@id/mIvProcess"
-        app:layout_constraintRight_toLeftOf="@id/mIvProcessRight"
-        app:layout_constraintTop_toTopOf="@id/mIvProcess" />
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="播放:02:35"
+        app:layout_constraintLeft_toRightOf="@id/mTvCutMusicSelected"
+        app:layout_constraintRight_toLeftOf="@id/mTvCutMusicAll"
+        app:layout_constraintTop_toTopOf="@id/mTvCutMusicSelected" />
+
+    <TextView
+        android:id="@+id/mTvCutMusicAll"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="全部:03:55"
+        app:layout_constraintLeft_toRightOf="@id/mTvCutMusicPlayed"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="@id/mTvCutMusicPlayed" />
+
+    <icbc.com.musiccut.view.SpectrumView
+        android:id="@+id/mSpectrumView"
+        android:layout_width="match_parent"
+        android:layout_height="80dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginRight="16dp"
+        android:background="@color/black"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/mTvCutMusicPlayed" />
+
+    <TextView
+        android:id="@+id/mTvCutMusicStart"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="48dp"
+        android:gravity="center"
+        android:text="开始:"
+        app:layout_constraintHorizontal_weight="2"
+        app:layout_constraintLeft_toLeftOf="@id/mSpectrumView"
+        app:layout_constraintRight_toLeftOf="@id/mTvCutMusicStartMinute"
+        app:layout_constraintTop_toBottomOf="@id/mSpectrumView" />
+
+    <TextView
+        android:id="@+id/mTvCutMusicStartMinute"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="00"
+        app:layout_constraintBottom_toBottomOf="@id/mTvCutMusicStart"
+        app:layout_constraintHorizontal_weight="1"
+        app:layout_constraintLeft_toRightOf="@id/mTvCutMusicStart"
+        app:layout_constraintRight_toLeftOf="@id/mTvCutMusicStartSecond"
+        app:layout_constraintTop_toTopOf="@id/mTvCutMusicStart" />
+
+    <TextView
+        android:id="@+id/mTvCutMusicStartSecond"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="00"
+        app:layout_constraintBottom_toBottomOf="@id/mTvCutMusicStart"
+        app:layout_constraintHorizontal_weight="1"
+        app:layout_constraintLeft_toRightOf="@id/mTvCutMusicStartMinute"
+        app:layout_constraintRight_toLeftOf="@id/mTvCutMusicStartMill"
+        app:layout_constraintTop_toTopOf="@id/mTvCutMusicStart" />
+
+    <TextView
+        android:id="@+id/mTvCutMusicStartMill"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="00"
+        app:layout_constraintBottom_toBottomOf="@id/mTvCutMusicStart"
+        app:layout_constraintHorizontal_weight="1"
+        app:layout_constraintLeft_toRightOf="@id/mTvCutMusicStartSecond"
+        app:layout_constraintRight_toLeftOf="@id/mHolder"
+        app:layout_constraintTop_toTopOf="@id/mTvCutMusicStart" />
+
+    <View
+        android:id="@+id/mHolder"
+        android:layout_width="0dp"
+        android:layout_height="1dp"
+        app:layout_constraintBottom_toBottomOf="@id/mTvCutMusicStart"
+        app:layout_constraintHorizontal_weight="3"
+        app:layout_constraintLeft_toRightOf="@id/mTvCutMusicStartMill"
+        app:layout_constraintRight_toLeftOf="@id/mTvCutMusicEnd"
+        app:layout_constraintTop_toTopOf="@id/mTvCutMusicStart" />
+
+    <TextView
+        android:id="@+id/mTvCutMusicEnd"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="结束:"
+        app:layout_constraintBottom_toBottomOf="@id/mTvCutMusicStart"
+        app:layout_constraintHorizontal_weight="2"
+        app:layout_constraintLeft_toRightOf="@id/mHolder"
+        app:layout_constraintRight_toLeftOf="@id/mTvCutMusicEndMinute"
+        app:layout_constraintTop_toTopOf="@id/mTvCutMusicStart" />
+
+    <TextView
+        android:id="@+id/mTvCutMusicEndMinute"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="00"
+        app:layout_constraintBottom_toBottomOf="@id/mTvCutMusicEnd"
+        app:layout_constraintHorizontal_weight="1"
+        app:layout_constraintLeft_toRightOf="@id/mTvCutMusicEnd"
+        app:layout_constraintRight_toLeftOf="@id/mTvCutMusicEndSecond"
+        app:layout_constraintTop_toTopOf="@id/mTvCutMusicEnd" />
+
+    <TextView
+        android:id="@+id/mTvCutMusicEndSecond"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="00"
+        app:layout_constraintBottom_toBottomOf="@id/mTvCutMusicEnd"
+        app:layout_constraintHorizontal_weight="1"
+        app:layout_constraintLeft_toRightOf="@id/mTvCutMusicEndMinute"
+        app:layout_constraintRight_toLeftOf="@id/mTvCutMusicEndMill"
+        app:layout_constraintTop_toTopOf="@id/mTvCutMusicEnd" />
+
+    <TextView
+        android:id="@+id/mTvCutMusicEndMill"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="16dp"
+        android:gravity="center"
+        android:text="00"
+        app:layout_constraintBottom_toBottomOf="@id/mTvCutMusicEnd"
+        app:layout_constraintHorizontal_weight="1"
+        app:layout_constraintLeft_toRightOf="@id/mTvCutMusicEndSecond"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="@id/mTvCutMusicEnd" />
 
     <ImageView
-        android:id="@+id/mIvProcessRight"
+        android:id="@+id/mIvCutMusicStartMinuteUp"
         android:layout_width="wrap_content"
-        android:layout_height="@dimen/title_height"
-        android:layout_marginRight="8dp"
-        android:src="@mipmap/icon_right"
-        app:layout_constraintBottom_toBottomOf="@id/mIvProcess"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="@id/mIvProcess" />
+        android:layout_height="wrap_content"
+        android:paddingTop="4dp"
+        android:paddingBottom="4dp"
+        android:src="@mipmap/icon_cut_up"
+        app:layout_constraintBottom_toTopOf="@id/mTvCutMusicStartMinute"
+        app:layout_constraintLeft_toLeftOf="@id/mTvCutMusicStartMinute"
+        app:layout_constraintRight_toRightOf="@id/mTvCutMusicStartMinute" />
 
+    <ImageView
+        android:id="@+id/mIvCutMusicStartMinuteDown"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@mipmap/icon_cut_down"
+        app:layout_constraintLeft_toLeftOf="@id/mTvCutMusicStartMinute"
+        app:layout_constraintRight_toRightOf="@id/mTvCutMusicStartMinute"
+        app:layout_constraintTop_toBottomOf="@id/mTvCutMusicStartMinute" />
+
+    <ImageView
+        android:id="@+id/mIvCutMusicStartSecondUp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingTop="4dp"
+        android:paddingBottom="4dp"
+        android:src="@mipmap/icon_cut_up"
+        app:layout_constraintBottom_toTopOf="@id/mTvCutMusicStartSecond"
+        app:layout_constraintLeft_toLeftOf="@id/mTvCutMusicStartSecond"
+        app:layout_constraintRight_toRightOf="@id/mTvCutMusicStartSecond" />
+
+    <ImageView
+        android:id="@+id/mIvCutMusicStartSecondDown"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@mipmap/icon_cut_down"
+        app:layout_constraintLeft_toLeftOf="@id/mTvCutMusicStartSecond"
+        app:layout_constraintRight_toRightOf="@id/mTvCutMusicStartSecond"
+        app:layout_constraintTop_toBottomOf="@id/mTvCutMusicStartSecond" />
+
+    <ImageView
+        android:id="@+id/mIvCutMusicStartMillUp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingTop="4dp"
+        android:paddingBottom="4dp"
+        android:src="@mipmap/icon_cut_up"
+        app:layout_constraintBottom_toTopOf="@id/mTvCutMusicStartMill"
+        app:layout_constraintLeft_toLeftOf="@id/mTvCutMusicStartMill"
+        app:layout_constraintRight_toRightOf="@id/mTvCutMusicStartMill" />
+
+    <ImageView
+        android:id="@+id/mIvCutMusicStartMillDown"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@mipmap/icon_cut_down"
+        app:layout_constraintLeft_toLeftOf="@id/mTvCutMusicStartMill"
+        app:layout_constraintRight_toRightOf="@id/mTvCutMusicStartMill"
+        app:layout_constraintTop_toBottomOf="@id/mTvCutMusicStartMill" />
+
+    <ImageView
+        android:id="@+id/mIvCutMusicEndMinuteUp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingTop="4dp"
+        android:paddingBottom="4dp"
+        android:src="@mipmap/icon_cut_up"
+        app:layout_constraintBottom_toTopOf="@id/mTvCutMusicEndMinute"
+        app:layout_constraintLeft_toLeftOf="@id/mTvCutMusicEndMinute"
+        app:layout_constraintRight_toRightOf="@id/mTvCutMusicEndMinute" />
+
+    <ImageView
+        android:id="@+id/mIvCutMusicEndMinuteDown"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@mipmap/icon_cut_down"
+        app:layout_constraintLeft_toLeftOf="@id/mTvCutMusicEndMinute"
+        app:layout_constraintRight_toRightOf="@id/mTvCutMusicEndMinute"
+        app:layout_constraintTop_toBottomOf="@id/mTvCutMusicEndMinute" />
+
+    <ImageView
+        android:id="@+id/mIvCutMusicEndSecondUp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingTop="4dp"
+        android:paddingBottom="4dp"
+        android:src="@mipmap/icon_cut_up"
+        app:layout_constraintBottom_toTopOf="@id/mTvCutMusicEndSecond"
+        app:layout_constraintLeft_toLeftOf="@id/mTvCutMusicEndSecond"
+        app:layout_constraintRight_toRightOf="@id/mTvCutMusicEndSecond" />
+
+    <ImageView
+        android:id="@+id/mIvCutMusicEndSecondDown"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@mipmap/icon_cut_down"
+        app:layout_constraintLeft_toLeftOf="@id/mTvCutMusicEndSecond"
+        app:layout_constraintRight_toRightOf="@id/mTvCutMusicEndSecond"
+        app:layout_constraintTop_toBottomOf="@id/mTvCutMusicEndSecond" />
+
+    <ImageView
+        android:id="@+id/mIvCutMusicEndMillUp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingTop="4dp"
+        android:paddingBottom="4dp"
+        android:src="@mipmap/icon_cut_up"
+        app:layout_constraintBottom_toTopOf="@id/mTvCutMusicEndMill"
+        app:layout_constraintLeft_toLeftOf="@id/mTvCutMusicEndMill"
+        app:layout_constraintRight_toRightOf="@id/mTvCutMusicEndMill" />
+
+    <ImageView
+        android:id="@+id/mIvCutMusicEndMillDown"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@mipmap/icon_cut_down"
+        app:layout_constraintLeft_toLeftOf="@id/mTvCutMusicEndMill"
+        app:layout_constraintRight_toRightOf="@id/mTvCutMusicEndMill"
+        app:layout_constraintTop_toBottomOf="@id/mTvCutMusicEndMill" />
+
+    <ImageView
+        android:id="@+id/mIvCutPlay"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="45dp"
+        android:src="@mipmap/icon_cut_play"
+        app:layout_constraintLeft_toLeftOf="@id/mSpectrumView"
+        app:layout_constraintRight_toRightOf="@id/mSpectrumView"
+        app:layout_constraintTop_toBottomOf="@id/mTvCutMusicStart" />
+
+    <RadioGroup
+        android:id="@+id/mRgCut"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="16dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginRight="16dp"
+        android:layout_marginBottom="64dp"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/mIvCutPlay">
+
+        <RadioButton
+            android:id="@+id/mRbCutMp3"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="mp3模式" />
+
+        <RadioButton
+            android:id="@+id/mRbCutStable"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:checked="true"
+            android:text="稳定模式" />
+
+        <RadioButton
+            android:id="@+id/mRbCutSpeed"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="快速模式" />
+    </RadioGroup>
 </android.support.constraint.ConstraintLayout>
