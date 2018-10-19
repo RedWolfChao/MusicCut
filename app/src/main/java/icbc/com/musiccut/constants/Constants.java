@@ -13,6 +13,7 @@ public class Constants {
     public static final String EXTRA_KEY_PROCESS_MUSIC = "EXTRA_KEY_PROCESS_MUSIC";
     public static final String EXTRA_KEY_PROCESS_NAME = "EXTRA_KEY_PROCESS_NAME";
     public static final String EXTRA_KEY_IS_FOR_RESULT = "EXTRA_KEY_IS_FOR_RESULT";
+    public static final String EXTRA_KEY_PERMISSIONS = "EXTRA_KEY_PERMISSIONS";
 
 
     /* PROCESS NAMES */

@@ -16,23 +16,22 @@ import icbc.com.musiccut.R;
 
 
 /**
- * 处理权限的类
- * <p>
- * Created by wangchenlong on 16/2/11.
+ * Created By RedWolf on 2018/10/19 14:21
+ * PermissionsActivity.java
  */
 public class PermissionsActivity extends AppCompatActivity {
     public static final int PERMISSIONS_GRANTED = 0;
     public static final int PERMISSIONS_DENIED = 1;
 
     private static final int PERMISSION_REQUEST_CODE = 0;
-    private static final String EXTRA_PERMISSIONS = "me.chunyu.clwang.permissions.extra_permissions";
+    private static final String EXTRA_PERMISSIONS = "EXTRA_PERMISSIONS";
     private static final String PACKAGE_URL_SCHEME = "package:";
 
     private PermissionsChecker mChecker; // 检查权限
     private boolean mRequiresCheck; // 是否检查
 
     // 启动当前的Activity
-    public static void startActivityForResult(Activity activity, int requestCode, String... permissions) {
+    public static void actionStartForResult(Activity activity, int requestCode, String... permissions) {
         Intent intent = new Intent(activity, PermissionsActivity.class);
         intent.putExtra(EXTRA_PERMISSIONS, permissions);
         ActivityCompat.startActivityForResult(activity, intent, requestCode, null);
@@ -43,9 +42,8 @@ public class PermissionsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
 
         if (getIntent() == null || !getIntent().hasExtra(EXTRA_PERMISSIONS)) {
-            throw new RuntimeException("当前Activity需要使用静态方法startActivityForResult启动");
+            throw new RuntimeException("当前Activity需要使用静态方法actionStartForResult启动");
         }
-
         setContentView(R.layout.activity_permissions);
 
         mChecker = new PermissionsChecker(this);
@@ -104,6 +102,7 @@ public class PermissionsActivity extends AppCompatActivity {
     private void showMissingPermissionDialog() {
         AlertDialog.Builder builder = new AlertDialog.Builder(PermissionsActivity.this);
         builder.setTitle(R.string.help).setMessage(R.string.string_help_text);
+        builder.setCancelable(false);
         builder.setNegativeButton(R.string.quit, ((dialog, which) -> {
             setResult(PERMISSIONS_DENIED);
             finish();
@@ -111,7 +110,6 @@ public class PermissionsActivity extends AppCompatActivity {
         builder.setPositiveButton(R.string.settings, (dialog, which) -> {
             startAppSettings();
         });
-        builder.setCancelable(false);
         builder.show();
     }
 

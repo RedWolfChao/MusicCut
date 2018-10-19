@@ -57,7 +57,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         super.onResume();
         PermissionsChecker checker = new PermissionsChecker(this);
         if (checker.lakesPermissions(Constants.PERMISSIONS)) {
-            PermissionsActivity.startActivityForResult(this, Constants.REQUEST_CODE_GET_PERMISSION, Constants.PERMISSIONS);
+            PermissionsActivity.actionStartForResult(this, Constants.REQUEST_CODE_GET_PERMISSION, Constants.PERMISSIONS);
         }
 
     }
