@@ -18,7 +18,7 @@ import java.util.List;
 import icbc.com.musiccut.R;
 import icbc.com.musiccut.callback.LocalMusicCallBack;
 import icbc.com.musiccut.model.LocalMusicEntity;
-import icbc.com.musiccut.utils.FileUtils;
+import icbc.com.musiccut.utils.MusicUtils;
 import icbc.com.musiccut.utils.TimeUtils;
 
 /**
@@ -31,18 +31,12 @@ public class LocalMusicAdapter extends RecyclerView.Adapter<LocalMusicAdapter.My
     private Context mContext;
     private LocalMusicCallBack mLocalMusicCallBack;
     private boolean mIsSearch;
-    private boolean mIsForResult;
 
 
-    public LocalMusicAdapter(List<LocalMusicEntity> mLocalMusicEntityList, Context mContext, boolean isSearch, boolean isForResult) {
+    public LocalMusicAdapter(List<LocalMusicEntity> mLocalMusicEntityList, Context mContext, boolean isSearch) {
         this.mLocalMusicEntityList = mLocalMusicEntityList;
         this.mContext = mContext;
         this.mIsSearch = isSearch;
-        this.mIsForResult = isForResult;
-    }
-
-    private LocalMusicAdapter(List<LocalMusicEntity> mLocalMusicEntityList, Context mContext, boolean isSearch) {
-        this(mLocalMusicEntityList, mContext, isSearch, false);
     }
 
 
@@ -69,7 +63,7 @@ public class LocalMusicAdapter extends RecyclerView.Adapter<LocalMusicAdapter.My
     public void onBindViewHolder(@NonNull MyViewHolder holder, final int position) {
         LocalMusicEntity entity = mLocalMusicEntityList.get(position);
         String musicLong = String.format(mContext.getResources().getString(R.string.string_music_long), TimeUtils.millis2minute(entity.getMusicLong()) + "");
-        String musicType = String.format(mContext.getResources().getString(R.string.string_music_size), FileUtils.byte2size(entity.getMusicSize()) + "");
+        String musicType = String.format(mContext.getResources().getString(R.string.string_music_size), MusicUtils.byte2size(entity.getMusicSize()) + "");
         String musicSize = String.format(mContext.getResources().getString(R.string.string_music_type), entity.getMusicType() + "");
         holder.tvMusicLong.setText(musicLong);
         holder.tvMusicSize.setText(musicType);
@@ -97,12 +91,8 @@ public class LocalMusicAdapter extends RecyclerView.Adapter<LocalMusicAdapter.My
         }
         //  event
         holder.vgMusicInfo.setOnClickListener(v -> mLocalMusicCallBack.onItemClick(position));
-        if (mIsForResult) {
-            holder.ibMenu.setVisibility(View.GONE);
-        } else {
-            holder.ibMenu.setVisibility(View.VISIBLE);
-            holder.ibMenu.setOnClickListener(v -> mLocalMusicCallBack.onMenuClick(position));
-        }
+        holder.ibMenu.setOnClickListener(v -> mLocalMusicCallBack.onMenuClick(position));
+
     }
 
     @Override

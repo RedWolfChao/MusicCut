@@ -9,12 +9,8 @@ import android.support.annotation.Nullable;
 import android.util.AttributeSet;
 import android.view.View;
 
-import com.blankj.utilcode.util.LogUtils;
-
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Timer;
-import java.util.TimerTask;
 
 import icbc.com.musiccut.R;
 
@@ -27,7 +23,6 @@ public class SpectrumView extends View {
     private Paint mPaint;
     private Path mPath;
     private boolean mIsPlaying;
-    private Timer mTimer;
 
     public SpectrumView(Context context) {
         this(context, null);
@@ -48,7 +43,6 @@ public class SpectrumView extends View {
         mPaint.setAntiAlias(true);
         mPaint.setColor(getResources().getColor(R.color.colorPrimary));
         mPath = new Path();
-        mTimer = new Timer();
 
     }
 
@@ -81,14 +75,9 @@ public class SpectrumView extends View {
 
     public void stopDraw() {
         mIsPlaying = false;
-        mTimer.cancel();
-        mTimer = null;
     }
 
     public void startDraw(byte[] points) {
-        if (mTimer == null) {
-            mTimer = new Timer();
-        }
         if (!mIsPlaying) {
             mIsPlaying = true;
         }
@@ -99,16 +88,6 @@ public class SpectrumView extends View {
     @Override
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
-        if (mIsPlaying) {
-            mTimer.schedule(new TimerTask() {
-                @Override
-                public void run() {
-                    if (mIsPlaying) {
-                        canvas.drawPath(mPath, mPaint);
-                        invalidate();
-                    }
-                }
-            }, 0, 200);
-        }
+        canvas.drawPath(mPath, mPaint);
     }
 }

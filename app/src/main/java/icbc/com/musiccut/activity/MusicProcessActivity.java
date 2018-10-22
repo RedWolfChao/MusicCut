@@ -9,27 +9,26 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.blankj.utilcode.util.LogUtils;
+import com.blankj.utilcode.util.StringUtils;
 import com.blankj.utilcode.util.ToastUtils;
 
 import java.io.IOException;
-import java.util.Arrays;
 
 import icbc.com.musiccut.R;
 import icbc.com.musiccut.base.BaseActivity;
 import icbc.com.musiccut.callback.MusicPlayCallBack;
 import icbc.com.musiccut.constants.Constants;
 import icbc.com.musiccut.manager.MediaPlayManager;
-import icbc.com.musiccut.model.LocalMusicEntity;
+import icbc.com.musiccut.utils.MusicUtils;
 import icbc.com.musiccut.view.SpectrumView;
 
 public class MusicProcessActivity extends BaseActivity implements View.OnClickListener, MusicPlayCallBack {
     private MediaPlayManager mMediaPlayManager;
     private Visualizer mVisualizer;
 
-    public static void actionStart(Context context, String processName, LocalMusicEntity entity) {
+    public static void actionStart(Context context, String processName, String musicPath) {
         Intent intent = new Intent(context, MusicProcessActivity.class);
-        intent.putExtra(Constants.EXTRA_KEY_PROCESS_MUSIC, entity);
+        intent.putExtra(Constants.EXTRA_KEY_PROCESS_MUSIC_PATH, musicPath);
         intent.putExtra(Constants.EXTRA_KEY_PROCESS_NAME, processName);
         context.startActivity(intent);
     }
@@ -45,7 +44,7 @@ public class MusicProcessActivity extends BaseActivity implements View.OnClickLi
     private ConstraintLayout mChooseLayout;
     private SpectrumView mSpectrumView;
 
-    private LocalMusicEntity mLocalMusicEntity;
+    private String mMusicPath;
     private String mProcessName;
 
 
@@ -66,7 +65,7 @@ public class MusicProcessActivity extends BaseActivity implements View.OnClickLi
 
     private void initParam() {
         Intent intent = getIntent();
-        mLocalMusicEntity = (LocalMusicEntity) intent.getSerializableExtra(Constants.EXTRA_KEY_PROCESS_MUSIC);
+        mMusicPath = intent.getStringExtra(Constants.EXTRA_KEY_PROCESS_MUSIC_PATH);
         mProcessName = intent.getStringExtra(Constants.EXTRA_KEY_PROCESS_NAME);
     }
 
@@ -81,9 +80,9 @@ public class MusicProcessActivity extends BaseActivity implements View.OnClickLi
         mIvCutPlay = findViewById(R.id.mIvCutPlay);
         //
         mTvTitle.setText(mProcessName);
-        if (mLocalMusicEntity != null) {
+        if (!StringUtils.isEmpty(mMusicPath)) {
             startVisualiser();
-            mTvProcessMusicName.setText(mLocalMusicEntity.getMusicEasyName());
+            mTvProcessMusicName.setText(MusicUtils.getMusicNameByPath(mMusicPath));
         } else {
             mTvProcessMusicName.setText(getResources().getString(R.string.string_click_choose_music));
         }
@@ -123,11 +122,11 @@ public class MusicProcessActivity extends BaseActivity implements View.OnClickLi
     @Override
     protected void onPause() {
         if (mVisualizer != null) {
-            mVisualizer.setEnabled(false);
             mVisualizer.release();
         }
         if (mMediaPlayManager != null && mMediaPlayManager.isPlaying()) {
             mMediaPlayManager.stopMusic();
+            mMediaPlayManager = null;
         }
         if (mSpectrumView != null) {
             mSpectrumView.stopDraw();
@@ -151,20 +150,20 @@ public class MusicProcessActivity extends BaseActivity implements View.OnClickLi
             case R.id.mIvBack:
                 break;
             case R.id.mIvCutPlay:
-                if (mLocalMusicEntity == null) {
+                if (StringUtils.isEmpty(mMusicPath)) {
                     ToastUtils.showShort("请先选择音乐");
                     return;
                 }
                 //  播放音乐
                 try {
-                    mMediaPlayManager.init(mLocalMusicEntity.getMusicPath(), this);
+                    mMediaPlayManager.init(mMusicPath, this);
                     mMediaPlayManager.playMusic();
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
                 break;
             case R.id.mChooseLayout:
-                SearchActivity.actionStartForResult(this, Constants.REQUEST_CODE_GET_MUSIC);
+                SearchActivity.actionStartForResult(this, Constants.REQUEST_CODE_GET_MUSIC_PATH);
                 break;
         }
     }
@@ -176,13 +175,13 @@ public class MusicProcessActivity extends BaseActivity implements View.OnClickLi
             return;
         }
         switch (requestCode) {
-            case Constants.REQUEST_CODE_GET_MUSIC:
-                mLocalMusicEntity = (LocalMusicEntity) data.getSerializableExtra(Constants.EXTRA_KEY_PROCESS_MUSIC);
-                if (mLocalMusicEntity == null) {
+            case Constants.REQUEST_CODE_GET_MUSIC_PATH:
+                mMusicPath = data.getStringExtra(Constants.EXTRA_KEY_PROCESS_MUSIC_PATH);
+                if (StringUtils.isEmpty(mMusicPath)) {
                     return;
                 }
                 startVisualiser();
-                mTvProcessMusicName.setText(mLocalMusicEntity.getMusicEasyName());
+                mTvProcessMusicName.setText(MusicUtils.getMusicNameByPath(mMusicPath));
                 break;
         }
     }
@@ -191,4 +190,5 @@ public class MusicProcessActivity extends BaseActivity implements View.OnClickLi
     public void onMusicProgress(int progress) {
 
     }
+
 }

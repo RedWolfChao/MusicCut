@@ -2,6 +2,8 @@ package icbc.com.musiccut.model;
 
 import android.support.annotation.NonNull;
 
+import com.blankj.utilcode.util.StringUtils;
+
 import java.io.Serializable;
 
 import icbc.com.musiccut.utils.PinyinUtils;
@@ -20,8 +22,7 @@ public class LocalMusicEntity implements Serializable, Comparable<LocalMusicEnti
     private long musicLong;
     private String mimeType;
     private long musicSize;
-    private String musicType;
-    private String musicPinyin;
+
 
     public String getMusicName() {
         return musicName;
@@ -40,12 +41,11 @@ public class LocalMusicEntity implements Serializable, Comparable<LocalMusicEnti
     }
 
     public String getMusicType() {
+        if (StringUtils.isEmpty(this.musicName)) {
+            this.musicName = this.musicEasyName;
+        }
         int index = this.musicName.lastIndexOf(".");
         return this.musicName.substring(index + 1);
-    }
-
-    public void setMusicType(String musicType) {
-        this.musicType = musicType;
     }
 
     public long getMusicLong() {
@@ -58,10 +58,6 @@ public class LocalMusicEntity implements Serializable, Comparable<LocalMusicEnti
 
     public String getMusicPinyin() {
         return PinyinUtils.getPinYinHeadChar(getMusicEasyName()).substring(0, 1);
-    }
-
-    public void setMusicPinyin(String musicPinyin) {
-        this.musicPinyin = musicPinyin;
     }
 
     public String getMusicId() {

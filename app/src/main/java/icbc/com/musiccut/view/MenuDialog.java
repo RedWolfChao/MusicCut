@@ -15,7 +15,7 @@ import android.widget.TextView;
 import icbc.com.musiccut.R;
 import icbc.com.musiccut.activity.MusicProcessActivity;
 import icbc.com.musiccut.constants.Constants;
-import icbc.com.musiccut.model.LocalMusicEntity;
+import icbc.com.musiccut.utils.MusicUtils;
 
 /**
  * Created By RedWolf on 2018/10/15 9:29
@@ -25,24 +25,24 @@ import icbc.com.musiccut.model.LocalMusicEntity;
 
 public class MenuDialog extends Dialog implements View.OnClickListener {
     private Context mContext;
-    private LocalMusicEntity mLocalMusicEntity;
+    private String mMusicPath;
 
 
-    private MenuDialog(@NonNull Context context, LocalMusicEntity entity) {
+    private MenuDialog(@NonNull Context context, String path) {
         super(context, R.style.MenuDialog);
         this.mContext = context;
-        this.mLocalMusicEntity = entity;
+        this.mMusicPath = path;
     }
 
     @SuppressLint("StaticFieldLeak")
     private static MenuDialog menuDialog;
 
 
-    public static MenuDialog build(Context context, LocalMusicEntity entity) {
+    public static MenuDialog build(Context context, String path) {
         if (menuDialog != null) {
             menuDialog.cancelDialog();
         }
-        menuDialog = new MenuDialog(context, entity);
+        menuDialog = new MenuDialog(context, path);
         return menuDialog;
     }
 
@@ -53,7 +53,7 @@ public class MenuDialog extends Dialog implements View.OnClickListener {
         ImageView mIvMenuClose = findViewById(R.id.mIvMenuClose);
         TextView mTvTitle = findViewById(R.id.mTvTitle);
         ImageView mIvMenuCut = findViewById(R.id.mIvMenuCut);
-        mTvTitle.setText(mLocalMusicEntity.getMusicEasyName());
+        mTvTitle.setText(MusicUtils.getMusicNameByPath(mMusicPath));
 
         setOnClickListeners(mIvMenuClose, mIvMenuCut);
 
@@ -95,7 +95,7 @@ public class MenuDialog extends Dialog implements View.OnClickListener {
                 cancelDialog();
                 break;
             case R.id.mIvMenuCut:
-                MusicProcessActivity.actionStart(mContext, Constants.PRECESS_NAME_CUT_MUSIC, mLocalMusicEntity);
+                MusicProcessActivity.actionStart(mContext, Constants.PRECESS_NAME_CUT_MUSIC, mMusicPath);
                 cancelDialog();
                 break;
         }
