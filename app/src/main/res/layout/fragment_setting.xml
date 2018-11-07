@@ -228,6 +228,7 @@
         android:background="@color/white"
         android:gravity="center_vertical"
         android:text="@string/string_change_theme"
+        android:onClick="onClick"
         app:layout_constraintLeft_toRightOf="@id/mIvTheme"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@id/mLineWeChat" />

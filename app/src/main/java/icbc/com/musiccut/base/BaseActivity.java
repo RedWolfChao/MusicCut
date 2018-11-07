@@ -17,6 +17,7 @@ import android.view.View;
 public class BaseActivity extends AppCompatActivity {
     protected Context mContext;
     protected Activity mActivity;
+    protected String TAG = "FUCK";
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {

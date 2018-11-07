@@ -34,4 +34,13 @@ dependencies {
     implementation 'com.google.code.gson:gson:2.8.5'
     implementation 'com.blankj:utilcode:1.11.1'
     implementation 'com.android.support:cardview-v7:28.0.0'
+    //  换肤
+    implementation 'skin.support:skin-support:3.1.1'
+    // skin-support 基础控件支持
+    implementation 'skin.support:skin-support-design:3.1.1'
+    // skin-support-design material design 控件支持[可选]
+    implementation 'skin.support:skin-support-cardview:3.1.1'
+    // skin-support-cardview CardView 控件支持[可选]
+    implementation 'skin.support:skin-support-constraint-layout:3.1.1'
+    // skin-support-constraint-layout ConstraintLayout 控件支持[可选]
 }

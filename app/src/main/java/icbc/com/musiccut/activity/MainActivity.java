@@ -8,10 +8,12 @@ import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.constraint.ConstraintLayout;
 import android.support.v4.app.FragmentTransaction;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.blankj.utilcode.util.LogUtils;
 import com.blankj.utilcode.util.ToastUtils;
 
 import icbc.com.musiccut.R;
@@ -21,6 +23,7 @@ import icbc.com.musiccut.fragment.MainMusicFragment;
 import icbc.com.musiccut.fragment.MainSettingFragment;
 import icbc.com.musiccut.permissions.PermissionsActivity;
 import icbc.com.musiccut.permissions.PermissionsChecker;
+import skin.support.SkinCompatManager;
 
 /**
  * Created By RedWolf on 2018/10/12 10:11
@@ -177,6 +180,15 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
                 MusicProcessActivity.actionStart(mActivity, Constants.PRECESS_NAME_CUT_MUSIC);
                 mExitAnimator.start();
                 mExitInLayoutAnimator.start();
+                break;
+            //  SKIN
+            case R.id.mTvTheme:
+            case R.id.mIvTheme:
+                Log.i(TAG, "onClick: FUCK");
+                SkinCompatManager.getInstance().loadSkin("blue.skin", SkinCompatManager.SKIN_LOADER_STRATEGY_ASSETS);
+                SkinCompatManager.getInstance().getCurSkinName();
+                LogUtils.iTag("","");
+                Log.i(TAG, "onClick: ");
                 break;
         }
     }
